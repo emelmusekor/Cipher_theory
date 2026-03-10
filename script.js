@@ -1041,6 +1041,7 @@ function renderTm() {
     });
   });
   renderTraceTable("#tm-table", ["상태", "읽기", "쓰기", "이동", "다음"], rows);
+  updateTmHardware();
 }
 
 function renderVn() {
@@ -1066,6 +1067,7 @@ function renderVn() {
     `;
     memoryTarget.appendChild(cell);
   }
+  updateComputerHardware();
 }
 
 function renderBombeTrack(target, totalLength, text, offset) {
@@ -1096,12 +1098,14 @@ function animateScytale(sourceText, grid, outputText, mode) {
     renderBuildOutput("#scytale-build", [], -1);
     setText("#scytale-visual-caption", "영문자를 입력하면 시각화가 시작됩니다.");
     renderScytaleGrid(grid, "#scytale-grid");
+    updateScytaleHardware(grid, null, mode);
     return;
   }
   const buildChars = truncateArray(sequence.map((cell) => cell.char));
   runAnimationLoop("scytale", sequence, (step, index) => {
     renderScytaleGrid(grid, "#scytale-grid", step);
     renderBuildOutput("#scytale-build", buildChars, index);
+    updateScytaleHardware(grid, step, mode);
     setText(
       "#scytale-visual-caption",
       mode === "encode"
@@ -1122,6 +1126,7 @@ function animateCaesar(input, effectiveShift, reasonText) {
     renderAlphabetRail("#caesar-rail-shifted", []);
     renderPairStream("#caesar-pairs", []);
     setText("#caesar-visual-caption", "영문자를 입력하면 알파벳 이동이 보입니다.");
+    updateCaesarHardware(effectiveShift, input, caesarMode, null);
     return;
   }
   const topRail = alphabet.split("");
@@ -1131,6 +1136,7 @@ function animateCaesar(input, effectiveShift, reasonText) {
     renderAlphabetRail("#caesar-rail-plain", topRail, activeColumn);
     renderAlphabetRail("#caesar-rail-shifted", bottomRail, activeColumn);
     renderPairStream("#caesar-pairs", pairs, index);
+    updateCaesarHardware(effectiveShift, input, caesarMode, pair);
     const sign = effectiveShift >= 0 ? "+" : "";
     setText("#caesar-visual-caption", `${reasonText}: ${pair.input} -> ${pair.output} (shift ${sign}${effectiveShift})`);
   });
@@ -1145,6 +1151,7 @@ function animateVigenere(pairs, mode) {
     renderCellStrip("#vigenere-key-row", []);
     renderCellStrip("#vigenere-output-row", []);
     setText("#vigenere-visual-caption", "키워드와 영문 입력을 넣으면 반복 키가 움직입니다.");
+    updateVigenereHardware(null, mode);
     return;
   }
   const inputChars = frames.map((pair) => pair.input);
@@ -1154,6 +1161,7 @@ function animateVigenere(pairs, mode) {
     renderCellStrip("#vigenere-input-row", inputChars, index, index - 1);
     renderCellStrip("#vigenere-key-row", keyChars, index, index - 1);
     renderCellStrip("#vigenere-output-row", outputChars, index, index - 1);
+    updateVigenereHardware(pair, mode);
     const operator = mode === "encode" ? "+" : "-";
     setText("#vigenere-visual-caption", `${pair.input} ${operator} ${pair.key}(${pair.shift}) = ${pair.output}`);
   });
@@ -1177,7 +1185,7 @@ function renderEnigmaPath(frame) {
   setText("#enigma-window-right", frame.after[2]);
 }
 
-function animateEnigma(trace, fallbackWindows) {
+function animateEnigma(trace, fallbackWindows, settings) {
   const frames = truncateArray(trace);
   if (!frames.length) {
     clearEnigmaPath();
@@ -1185,6 +1193,7 @@ function animateEnigma(trace, fallbackWindows) {
     setText("#enigma-window-middle", fallbackWindows[1] || "A");
     setText("#enigma-window-right", fallbackWindows[2] || "A");
     renderPairStream("#enigma-letter-film", []);
+    updateEnigmaHardware(null, settings, fallbackWindows);
     setText("#enigma-visual-caption", "영문자를 입력하면 한 글자가 로터를 통과하는 경로가 보입니다.");
     return;
   }
@@ -1196,15 +1205,17 @@ function animateEnigma(trace, fallbackWindows) {
   runAnimationLoop("enigma", frames, (frame, index) => {
     renderPairStream("#enigma-letter-film", pairs, index);
     renderEnigmaPath(frame);
+    updateEnigmaHardware(frame, settings, fallbackWindows);
     setText("#enigma-visual-caption", `${frame.before}에서 ${frame.input}가 들어가 ${frame.output}로 나오고, 다음 창은 ${frame.after}가 됩니다.`);
   }, 860);
 }
 
-function animateBombe(result) {
+function animateBombe(result, order) {
   const frames = truncateArray(result.alignments, 8);
   if (!result.cleanCipher || !result.cleanCrib || !frames.length) {
     renderCellStrip("#bombe-cipher-track", []);
     renderCellStrip("#bombe-crib-track", []);
+    updateBombeHardware(result, order, null);
     setText("#bombe-visual-caption", "암호문과 크립을 입력하면 정렬을 겹쳐 보는 과정이 보입니다.");
     return;
   }
@@ -1212,11 +1223,153 @@ function animateBombe(result) {
   runAnimationLoop("bombe", frames, (frame) => {
     renderCellStrip("#bombe-cipher-track", visibleCipher);
     renderBombeTrack("#bombe-crib-track", visibleCipher.length, result.cleanCrib, frame.offset);
+    updateBombeHardware(result, order, frame);
     const caption = frame.status === "impossible"
       ? `offset ${frame.offset}: ${frame.segment}와 ${result.cleanCrib}를 겹치면 자기 자신으로 가는 글자가 생겨 바로 탈락합니다.`
       : `offset ${frame.offset}: ${frame.segment}와 ${result.cleanCrib}를 겹쳐 보고 가능한 설정을 더 검사합니다.`;
     setText("#bombe-visual-caption", caption);
   }, 980);
+}
+
+function setInlineStyle(target, property, value) {
+  const element = resolveTarget(target);
+  if (element) {
+    element.style.setProperty(property, value);
+  }
+}
+
+function toggleElementClass(target, className, enabled) {
+  const element = resolveTarget(target);
+  if (element) {
+    element.classList.toggle(className, Boolean(enabled));
+  }
+}
+
+function updateScytaleHardware(grid, step, mode) {
+  for (let index = 0; index < 4; index += 1) {
+    const rowText = (grid[index] || []).join("") || "·";
+    setText(`#scytale-band-${index + 1}`, rowText);
+  }
+  const totalColumns = Math.max(1, grid[0]?.length || 1);
+  const columnRatio = (step?.column || 0) / Math.max(totalColumns - 1, 1);
+  const rowIndex = Math.min(step?.row || 0, 3);
+  setInlineStyle("#scytale-pointer", "left", `${18 + columnRatio * 60}%`);
+  setInlineStyle("#scytale-pointer", "top", `${26 + rowIndex * 16}%`);
+  setText(
+    "#scytale-machine-caption",
+    mode === "encode"
+      ? `막대 둘레 ${totalColumns}칸에 띠를 감은 상태입니다. 세로로 읽기 시작하면 글자 순서가 바뀝니다.`
+      : `같은 둘레의 막대에 다시 감으면 흐트러진 글자들이 원래 줄 순서로 돌아옵니다.`
+  );
+}
+
+function updateCaesarHardware(effectiveShift, input, mode, pair) {
+  const normalized = mod(effectiveShift, 26);
+  const source = pair?.input || onlyLetters(input)[0] || "A";
+  const output = pair?.output || caesarShiftChar(source, effectiveShift);
+  setInlineStyle("#caesar-disk-inner", "transform", `translate(-50%, -50%) rotate(${(normalized / 26) * 360}deg)`);
+  setText("#caesar-disk-shift", `${effectiveShift >= 0 ? "+" : ""}${effectiveShift}`);
+  setText("#caesar-disk-window", output);
+  setText(
+    "#caesar-machine-caption",
+    `${mode === "encode" ? "안쪽 원판을 앞으로 돌리면" : "원판을 거꾸로 맞추면"} ${source}가 창에서 ${output}(으)로 대응됩니다.`
+  );
+}
+
+function updateVigenereHardware(pair, mode) {
+  const current = pair || { input: "A", key: "A", output: "A", shift: 0 };
+  setText("#vigenere-machine-input", current.input);
+  setText("#vigenere-machine-key-display", current.key);
+  setText("#vigenere-machine-output", current.output);
+  setInlineStyle("#vigenere-wheel-input", "transform", `rotate(${charToIndex(current.input) * 6}deg)`);
+  setInlineStyle("#vigenere-wheel-key", "transform", `rotate(${charToIndex(current.key) * 8}deg)`);
+  setInlineStyle("#vigenere-wheel-output", "transform", `rotate(${charToIndex(current.output) * 6}deg)`);
+  setText(
+    "#vigenere-machine-caption",
+    pair
+      ? `${current.input} ${mode === "encode" ? "+" : "-"} ${current.key}(${current.shift}) = ${current.output}. 가운데 키 원판이 이 칸의 이동량을 만듭니다.`
+      : "입력과 키를 넣으면 세 개의 원판이 각 위치의 변환을 보여 줍니다."
+  );
+}
+
+function clearEnigmaHardware() {
+  ["#enigma-hw-keyboard", "#enigma-hw-plug", "#enigma-hw-right", "#enigma-hw-middle", "#enigma-hw-left", "#enigma-hw-reflector", "#enigma-hw-lamp"].forEach((target) => {
+    toggleElementClass(target, "active", false);
+  });
+}
+
+function updateEnigmaHardware(frame, settings, fallbackWindows) {
+  const windowText = frame?.after || (Array.isArray(fallbackWindows) ? fallbackWindows.join("") : fallbackWindows?.join ? fallbackWindows.join("") : "AAA");
+  const windows = (windowText || "AAA").split("");
+  setText("#enigma-hw-left-label", settings.order[0]);
+  setText("#enigma-hw-middle-label", settings.order[1]);
+  setText("#enigma-hw-right-label", settings.order[2]);
+  setText("#enigma-hw-left-window", windows[0] || "A");
+  setText("#enigma-hw-middle-window", windows[1] || "A");
+  setText("#enigma-hw-right-window", windows[2] || "A");
+  setText("#enigma-hw-input", frame?.input || onlyLetters(document.querySelector("#enigma-input").value)[0] || "A");
+  setText("#enigma-hw-output", frame?.output || "-");
+  clearEnigmaHardware();
+  if (frame) {
+    ["#enigma-hw-keyboard", "#enigma-hw-plug", "#enigma-hw-right", "#enigma-hw-middle", "#enigma-hw-left", "#enigma-hw-reflector", "#enigma-hw-lamp"].forEach((target) => {
+      toggleElementClass(target, "active", true);
+    });
+  }
+  setText(
+    "#enigma-machine-caption",
+    frame
+      ? `${frame.input} 신호가 플러그보드와 세 로터를 지나 ${frame.output} 램프를 켭니다. 그 뒤 창 위치는 ${frame.after}가 됩니다.`
+      : `로터 ${settings.order.join("-")}가 ${windows.join("")} 창 위치에서 다음 글자를 기다리고 있습니다.`
+  );
+}
+
+function updateBombeHardware(result, order, focus) {
+  setText("#bombe-drum-left-label", order?.[0] || "I");
+  setText("#bombe-drum-middle-label", order?.[1] || "II");
+  setText("#bombe-drum-right-label", order?.[2] || "III");
+  const goodOn = focus ? focus.status === "candidate" : result.alignments?.some((item) => item.status === "candidate");
+  const badOn = focus ? focus.status === "impossible" : result.alignments?.some((item) => item.status === "impossible");
+  toggleElementClass("#bombe-lamp-good", "active", goodOn);
+  toggleElementClass("#bombe-lamp-bad", "active", badOn);
+  setText(
+    "#bombe-machine-caption",
+    focus
+      ? focus.status === "impossible"
+        ? `offset ${focus.offset}는 같은 글자 금지 규칙에 걸려 빨간 램프가 켜집니다.`
+        : `offset ${focus.offset}는 더 검사할 가치가 있어 초록 램프가 켜집니다.`
+      : "회전 드럼이 가능한 설정을 빠르게 훑고, 모순이 보이면 즉시 탈락시킵니다."
+  );
+}
+
+function updateTmHardware() {
+  const track = resolveTarget("#tm-machine-track");
+  if (!track) {
+    return;
+  }
+  track.innerHTML = "";
+  for (let offset = -2; offset <= 2; offset += 1) {
+    const index = tmState.head + offset;
+    const cell = document.createElement("div");
+    cell.className = `tm-machine-cell ${offset === 0 ? "active" : ""}`.trim();
+    cell.innerHTML = `<small>${index}</small><span>${tmRead(index)}</span>`;
+    track.appendChild(cell);
+  }
+  setText("#tm-machine-caption", `헤드는 ${tmState.head}칸에서 ${tmRead(tmState.head)}를 읽고, 상태 ${tmState.state}에 따라 다음 행동을 고릅니다.`);
+}
+
+function updateComputerHardware() {
+  const lastLog = vnState.log.length ? vnState.log[vnState.log.length - 1] : "ready";
+  setText("#computer-hw-input", vnState.phase === "fetch" ? "read" : "stdin");
+  setText("#computer-hw-memory", `PC ${vnState.pc}`);
+  setText("#computer-hw-control", String(vnState.phase).toUpperCase());
+  setText("#computer-hw-alu", `ACC ${vnState.acc}`);
+  setText("#computer-hw-output", String(lastLog).slice(0, 18));
+  toggleElementClass("#computer-chip-input", "active", vnState.highlight.includes("input"));
+  toggleElementClass("#computer-chip-memory", "active", vnState.highlight.includes("memory"));
+  toggleElementClass("#computer-chip-control", "active", vnState.highlight.includes("control"));
+  toggleElementClass("#computer-chip-alu", "active", vnState.highlight.includes("alu"));
+  toggleElementClass("#computer-chip-output", "active", vnState.highlight.includes("output"));
+  setText("#computer-machine-caption", `현재 ${vnState.phase} 단계입니다. PC ${vnState.pc}, ACC ${vnState.acc}, IR ${vnState.ir}.`);
 }
 
 function updateScytale(mode) {
@@ -1301,13 +1454,13 @@ function updateEnigma() {
   setText("#enigma-output", result.error || result.output || "입력된 영문자가 없습니다.");
   setText("#enigma-message", result.error ? result.error : "같은 설정으로 결과 문자열을 다시 넣으면 원문으로 되돌릴 수 있습니다.");
   if (result.error) {
-    animateEnigma([], settings.positions);
+    animateEnigma([], settings.positions, settings);
     renderTraceTable("#enigma-trace", ["#", "입력/출력", "창 위치", "출력"], []);
     return;
   }
   const rows = result.trace.map((row) => [String(row.step), `${row.input} -> ${row.output}`, `${row.before} / ${row.after}`, row.output]);
   renderTraceTable("#enigma-trace", ["#", "입력/출력", "창 위치(전/후)", "결과"], rows);
-  animateEnigma(result.trace, result.finalWindow || settings.positions);
+  animateEnigma(result.trace, result.finalWindow || settings.positions, settings);
 }
 
 function updateBombe() {
@@ -1323,7 +1476,7 @@ function updateBombe() {
     setText("#bombe-note", "로터 순서를 다시 선택해 주세요.");
     alignTarget.innerHTML = "";
     candidateTarget.innerHTML = "";
-    animateBombe({ cleanCipher: "", cleanCrib: "", alignments: [] });
+    animateBombe({ cleanCipher: "", cleanCrib: "", alignments: [] }, order);
     return;
   }
 
@@ -1376,7 +1529,7 @@ function updateBombe() {
     candidateTarget.appendChild(card);
   }
 
-  animateBombe(result);
+  animateBombe(result, order);
 }
 
 function attachEvents() {
@@ -1554,4 +1707,6 @@ window.advanceTime = (milliseconds = 1000) => {
 };
 
 document.addEventListener("DOMContentLoaded", initialize);
+
+
 
