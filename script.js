@@ -17,6 +17,34 @@ const rotorCatalog = {
 const reflectorB = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
 
 const tmPresets = {
+  selfMapCheck: {
+    name: "자기 자신 금지 검사",
+    description: "왼쪽 글자와 오른쪽 글자가 같으면 !를 남겨 모순을 표시합니다.",
+    tape: "A#A",
+    blank: "_",
+    start: "readFirst",
+    accept: "done",
+    transitions: {
+      readFirst: {
+        "A": { write: "A", move: "R", next: "rememberA" },
+        "B": { write: "B", move: "R", next: "rememberB" },
+      },
+      rememberA: {
+        "#": { write: "#", move: "R", next: "compareA" },
+      },
+      rememberB: {
+        "#": { write: "#", move: "R", next: "compareB" },
+      },
+      compareA: {
+        "A": { write: "!", move: "N", next: "done" },
+        "B": { write: "B", move: "N", next: "done" },
+      },
+      compareB: {
+        "A": { write: "A", move: "N", next: "done" },
+        "B": { write: "!", move: "N", next: "done" },
+      },
+    },
+  },
   unaryIncrement: {
     name: "단항 +1",
     description: "1의 개수 뒤에 1을 하나 더 붙입니다.",
@@ -92,16 +120,17 @@ const vnPresets = {
 };
 
 const animationTimers = {};
+let caesarMode = "decode";
 
 const tmState = {
-  presetKey: "binaryIncrement",
+  presetKey: "selfMapCheck",
   tape: new Map(),
   head: 0,
-  state: "scan",
+  state: "readFirst",
   steps: 0,
   halted: false,
   log: "",
-  initialTape: "1011",
+  initialTape: "A#A",
 };
 
 const vnState = {
@@ -1201,6 +1230,7 @@ function updateScytale(mode) {
 }
 
 function updateCaesarTransform(mode) {
+  caesarMode = mode;
   const input = document.querySelector("#caesar-input").value;
   const shift = Number(document.querySelector("#caesar-shift").value);
   const effectiveShift = mode === "encode" ? shift : -shift;
@@ -1218,7 +1248,6 @@ function updateCaesarAnalysis() {
     setText("#caesar-math", "영문자를 입력하면 통계 점수를 계산합니다.");
     resolveTarget("#caesar-ranking").innerHTML = "";
     resolveTarget("#caesar-frequency").innerHTML = "";
-    animateCaesar("", 0, "");
     return;
   }
 
@@ -1230,10 +1259,11 @@ function updateCaesarAnalysis() {
   );
 
   if (ranked.length) {
-    setText("#caesar-output", ranked[0].plaintext);
     setText("#caesar-math", `카이제곱 점수가 가장 낮은 해는 shift ${ranked[0].shift}, 평문 ${ranked[0].plaintext}입니다.`);
     renderRanking("#caesar-ranking", ranked.slice(0, 5));
-    animateCaesar(input, -ranked[0].shift, "통계가 고른 최적 해독");
+  } else {
+    setText("#caesar-math", "후보를 계산할 수 없습니다.");
+    resolveTarget("#caesar-ranking").innerHTML = "";
   }
 
   renderFrequencyChart("#caesar-frequency", input);
@@ -1358,12 +1388,23 @@ function attachEvents() {
     updateScytale("encode");
   });
 
+  document.querySelector("#caesar-input").addEventListener("input", () => {
+    updateCaesarTransform(caesarMode);
+    updateCaesarAnalysis();
+  });
   document.querySelector("#caesar-shift").addEventListener("input", (event) => {
     setText("#caesar-shift-value", event.target.value);
-    updateCaesarTransform("encode");
+    updateCaesarTransform(caesarMode);
+    updateCaesarAnalysis();
   });
-  document.querySelector("#caesar-encode").addEventListener("click", () => updateCaesarTransform("encode"));
-  document.querySelector("#caesar-decode").addEventListener("click", () => updateCaesarTransform("decode"));
+  document.querySelector("#caesar-encode").addEventListener("click", () => {
+    updateCaesarTransform("encode");
+    updateCaesarAnalysis();
+  });
+  document.querySelector("#caesar-decode").addEventListener("click", () => {
+    updateCaesarTransform("decode");
+    updateCaesarAnalysis();
+  });
   document.querySelector("#caesar-analyze").addEventListener("click", updateCaesarAnalysis);
   document.querySelector("#caesar-example").addEventListener("click", () => {
     document.querySelector("#caesar-input").value = "WKLV LV D FLSKHU IRU FODVVURRP GLVFXVVLRQ";
@@ -1471,10 +1512,10 @@ function attachEvents() {
 }
 
 function initialize() {
-  document.querySelector("#tm-preset").value = "binaryIncrement";
-  document.querySelector("#tm-input").value = tmPresets.binaryIncrement.tape;
+  document.querySelector("#tm-preset").value = "selfMapCheck";
+  document.querySelector("#tm-input").value = tmPresets.selfMapCheck.tape;
   document.querySelector("#vn-program").value = vnPresets.sum.code;
-  loadTmPreset("binaryIncrement", tmPresets.binaryIncrement.tape);
+  loadTmPreset("selfMapCheck", tmPresets.selfMapCheck.tape);
   resetVnState(vnPresets.sum.code);
   attachEvents();
   updateScytale("encode");
@@ -1497,7 +1538,7 @@ window.render_game_to_text = () => JSON.stringify({
     steps: tmState.steps,
     tape: [...tmState.tape.entries()].slice(0, 12),
   },
-  vonNeumann: {
+  computerIO: {
     pc: vnState.pc,
     acc: vnState.acc,
     phase: vnState.phase,
@@ -1513,3 +1554,4 @@ window.advanceTime = (milliseconds = 1000) => {
 };
 
 document.addEventListener("DOMContentLoaded", initialize);
+

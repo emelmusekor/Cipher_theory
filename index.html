@@ -3,47 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>암호에서 컴퓨터로: 학생용 체험 실험실</title>
+  <title>암호의 역사와 컴퓨터의 탄생</title>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <div class="page-shell">
-    <header class="hero fade-up">
-      <div class="hero-copy">
-        <p class="eyebrow">Cryptography to Computation</p>
-        <h1>암호를 직접 움직여 보면서<br>컴퓨터가 왜 태어났는지 따라가는 실험실</h1>
-        <p class="hero-text">
-          이 페이지는 설명문을 읽는 페이지가 아니라, 직접 눌러 보고 관찰하는 페이지입니다.
-          스키테일의 전치, 시저의 이동, 비제네르의 반복 키, 애니그마의 회전 로터,
-          그리고 튜링 머신과 폰 노이만 구조까지 한 흐름으로 연결해 봅시다.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#scytale">처음부터 시작</a>
-          <a class="button secondary" href="#enigma">애니그마로 바로 가기</a>
-        </div>
-        <div class="hero-mission panel-lite">
-          <h3>오늘의 미션</h3>
-          <ul class="list">
-            <li>같은 문장이 규칙 하나로 어떻게 바뀌는지 본다.</li>
-            <li>사람의 추측과 계산 절차 중 무엇이 더 안정적인지 비교한다.</li>
-            <li>암호 해독이 왜 기계와 컴퓨터를 필요로 했는지 마지막까지 연결한다.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="hero-stats">
-        <article class="stat-card">
-          <span class="stat-value">7</span>
-          <span class="stat-label">체험 모듈</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-value">4</span>
-          <span class="stat-label">시각화 섹션</span>
-        </article>
-        <article class="stat-card">
-          <span class="stat-value">1</span>
-          <span class="stat-label">계산의 탄생 서사</span>
-        </article>
+        <header class="hero compact-hero fade-up">
+      <div class="hero-copy solo">
+        <h1>암호의 역사와 컴퓨터의 탄생</h1>
       </div>
     </header>
 
@@ -54,55 +22,8 @@
       <a href="#enigma">애니그마</a>
       <a href="#bombe">봄브</a>
       <a href="#turing-machine">튜링 머신</a>
-      <a href="#von-neumann">폰 노이만</a>
+      <a href="#computer-io">CPU와 입출력</a>
     </nav>
-
-    <section class="timeline-section fade-up">
-      <div class="section-heading">
-        <p class="section-kicker">탐험 경로</p>
-        <h2>암호를 복잡하게 만들수록, 계산을 대신할 기계가 필요해졌다</h2>
-        <p>
-          아래 순서대로 내려가며 실습해 보세요. 앞쪽의 암호 원리를 이해할수록 뒤쪽의 기계와 컴퓨터 구조가 더 자연스럽게 보입니다.
-        </p>
-      </div>
-      <div class="timeline">
-        <article class="timeline-card">
-          <span class="timeline-era">고대</span>
-          <h3>스키테일</h3>
-          <p>순서를 바꾸는 전치 암호</p>
-        </article>
-        <article class="timeline-card">
-          <span class="timeline-era">고전</span>
-          <h3>시저</h3>
-          <p>글자를 밀어 바꾸는 치환 암호</p>
-        </article>
-        <article class="timeline-card">
-          <span class="timeline-era">근대</span>
-          <h3>비제네르</h3>
-          <p>여러 이동값을 반복하는 다중 치환</p>
-        </article>
-        <article class="timeline-card">
-          <span class="timeline-era">20세기</span>
-          <h3>애니그마</h3>
-          <p>회전하는 로터가 만드는 기계 암호</p>
-        </article>
-        <article class="timeline-card">
-          <span class="timeline-era">전시 계산</span>
-          <h3>봄브</h3>
-          <p>사람의 추측을 기계 탐색으로 검증</p>
-        </article>
-        <article class="timeline-card">
-          <span class="timeline-era">이론</span>
-          <h3>튜링 머신</h3>
-          <p>절차 자체를 계산 모델로 바꿈</p>
-        </article>
-        <article class="timeline-card">
-          <span class="timeline-era">현대</span>
-          <h3>폰 노이만</h3>
-          <p>프로그램을 메모리에 저장해 실행</p>
-        </article>
-      </div>
-    </section>
 
     <main>
       <section id="scytale" class="lab-section fade-up">
@@ -128,7 +49,7 @@
           </article>
           <article class="panel lab-panel">
             <label for="scytale-input">문장 입력</label>
-            <textarea id="scytale-input" rows="4">TEACHERSMAKECOMPUTINGHUMAN</textarea>
+            <textarea id="scytale-input" rows="4">CIPHERSHELPUSSEEHOWCOMPUTERSBEGAN</textarea>
             <div class="inline-controls">
               <label for="scytale-columns">막대 둘레(열 수)</label>
               <input id="scytale-columns" type="number" min="2" max="12" value="5">
@@ -172,8 +93,8 @@
           <p class="section-kicker">2. 치환과 해독</p>
           <h2>시저 암호: 한 칸씩 밀리는 규칙을 눈으로 본다</h2>
           <p>
-            아래 알파벳 레일은 지금 어떤 이동값이 적용되는지 보여 줍니다.
-            해독 분석을 누르면 사람의 추측과 통계 계산이 각각 어떤 답을 내는지도 비교할 수 있습니다.
+            입력을 바꾸면 휴리스틱 추정, 수학적 최적해, 상위 후보가 다시 계산됩니다.
+            슬라이더를 움직이면 같은 문장이 몇 칸 이동하는지 즉시 보입니다.
           </p>
         </div>
         <div class="lab-grid">
@@ -188,7 +109,7 @@
               <p>가능한 모든 이동값을 시험한 뒤 빈도 분포와 가장 비슷한 해를 고릅니다.</p>
             </div>
             <div class="concept-callout">
-              <strong>미션:</strong> 먼저 직접 이동 수를 바꿔 보고, 그 다음 해독 분석 버튼으로 기계가 고른 답을 비교해 보세요.
+              <strong>해 보기:</strong> 입력 문장을 바꾸면 휴리스틱 추정, 수학적 최적해, 상위 후보가 모두 즉시 바뀌는지 확인해 보세요.
             </div>
           </article>
           <article class="panel lab-panel">
@@ -252,393 +173,493 @@
       </section>
 
       <section id="vigenere" class="lab-section fade-up">
-        <div class="section-heading">
-          <p class="section-kicker">3. 다중 치환</p>
-          <h2>비제네르: 같은 글자라도 위치가 다르면 다른 암호문이 나온다</h2>
-          <p>
-            키워드가 반복되면서 각 글자마다 다른 이동값이 적용됩니다.
-            아래 시각화에서 입력 글자, 반복 키, 출력 글자가 동시에 어떻게 움직이는지 보세요.
-          </p>
+  <div class="section-heading">
+    <p class="section-kicker">3. 다중 치환</p>
+    <h2>비제네르: 같은 글자라도 위치가 다르면 다른 암호문이 나온다</h2>
+    <p>
+      시저 암호는 모든 글자를 같은 만큼 이동시켰지만, 비제네르 암호는 글자마다 다른 이동값을 씁니다.
+      그래서 같은 평문 글자라도 놓인 위치가 다르면 다른 암호문으로 바뀝니다.
+    </p>
+  </div>
+  <div class="lab-grid">
+    <article class="panel theory-panel">
+      <h3>천천히 이해해 보기</h3>
+      <div class="detail-stack">
+        <div class="compare-card">
+          <strong>1. 키워드를 반복해서 맞춘다</strong>
+          <p>예를 들어 키워드가 <code>TURING</code>이면 문장 아래에 <code>TURINGTURING...</code>처럼 반복해서 깔립니다.</p>
         </div>
-        <div class="lab-grid">
-          <article class="panel theory-panel">
-            <h3>관찰 포인트</h3>
-            <ul class="list">
-              <li>같은 평문 글자라도 다른 키 글자와 만나면 결과가 달라집니다.</li>
-              <li>단일 치환보다 패턴 찾기가 어려워집니다.</li>
-              <li>애니그마처럼 매번 다른 치환으로 가는 중간 단계라고 생각해 볼 수 있습니다.</li>
-            </ul>
-            <div class="concept-callout">
-              <strong>미션:</strong> 키워드를 짧게, 길게 바꿔 가며 반복 패턴이 어떻게 달라지는지 확인해 보세요.
-            </div>
-          </article>
-          <article class="panel lab-panel">
-            <label for="vigenere-input">평문 또는 암호문</label>
-            <textarea id="vigenere-input" rows="4">COMPUTERSGREWOUTOFWARANDLOGIC</textarea>
-            <div class="inline-controls">
-              <label for="vigenere-key">키워드</label>
-              <input id="vigenere-key" type="text" value="TURING">
-            </div>
-            <div class="button-row">
-              <button id="vigenere-encode" class="button primary" type="button">암호화</button>
-              <button id="vigenere-decode" class="button secondary" type="button">복호화</button>
-              <button id="vigenere-example" class="button ghost" type="button">예시 불러오기</button>
-            </div>
-            <div class="result-block">
-              <h3>결과</h3>
-              <p id="vigenere-output" class="mono-output"></p>
-            </div>
-            <div class="visual-block">
-              <div class="visual-head">
-                <h3>움직이는 시각화</h3>
-                <p id="vigenere-visual-caption" class="helper-text"></p>
-              </div>
-              <div class="mini-stage">
-                <span id="vigenere-input-label" class="stage-label">입력 글자</span>
-                <div id="vigenere-input-row" class="cell-strip"></div>
-              </div>
-              <div class="mini-stage">
-                <span class="stage-label">반복 키</span>
-                <div id="vigenere-key-row" class="cell-strip"></div>
-              </div>
-              <div class="mini-stage">
-                <span id="vigenere-output-label" class="stage-label">출력 글자</span>
-                <div id="vigenere-output-row" class="cell-strip"></div>
-              </div>
-            </div>
-            <div class="result-block">
-              <h3>반복 키 스트림</h3>
-              <p id="vigenere-keystream" class="mono-output compact"></p>
-            </div>
-          </article>
+        <div class="compare-card">
+          <strong>2. 키 글자를 숫자로 본다</strong>
+          <p>A는 0칸, B는 1칸, C는 2칸처럼 생각합니다. 즉 키 글자가 이동량 역할을 합니다.</p>
         </div>
-      </section>
+        <div class="compare-card">
+          <strong>3. 각 위치마다 다른 만큼 이동한다</strong>
+          <p>첫 글자는 T만큼, 둘째 글자는 U만큼, 셋째 글자는 R만큼 밀립니다. 그래서 한 문장 안에서도 규칙이 계속 바뀝니다.</p>
+        </div>
+      </div>
+      <div class="component-strip">
+        <div class="component-card">
+          <span>평문 띠</span>
+          <strong>기준 알파벳</strong>
+        </div>
+        <div class="component-card">
+          <span>키 띠</span>
+          <strong>반복 키워드</strong>
+        </div>
+        <div class="component-card">
+          <span>출력 띠</span>
+          <strong>암호문</strong>
+        </div>
+      </div>
+      <div class="concept-callout">
+        <strong>천천히 볼 점:</strong> 비제네르는 사실 "시저 암호 여러 개를 번갈아 쓰는 장치"처럼 생각하면 이해가 쉬워집니다.
+        한 줄 전체가 아니라, 각 칸이 자기 키 글자만큼 따로 움직인다고 보면 됩니다.
+      </div>
+    </article>
+    <article class="panel lab-panel">
+      <label for="vigenere-input">평문 또는 암호문</label>
+      <textarea id="vigenere-input" rows="4">COMPUTERSGREWOUTOFWARANDLOGIC</textarea>
+      <div class="inline-controls">
+        <label for="vigenere-key">키워드</label>
+        <input id="vigenere-key" type="text" value="TURING">
+      </div>
+      <p class="helper-text">아래 시각화에서 입력 글자, 반복 키, 출력 글자가 한 칸씩 어떻게 연결되는지 보세요.</p>
+      <div class="button-row">
+        <button id="vigenere-encode" class="button primary" type="button">암호화</button>
+        <button id="vigenere-decode" class="button secondary" type="button">복호화</button>
+        <button id="vigenere-example" class="button ghost" type="button">예시 불러오기</button>
+      </div>
+      <div class="result-block">
+        <h3>결과</h3>
+        <p id="vigenere-output" class="mono-output"></p>
+      </div>
+      <div class="visual-block">
+        <div class="visual-head">
+          <h3>움직이는 시각화</h3>
+          <p id="vigenere-visual-caption" class="helper-text"></p>
+        </div>
+        <div class="mini-stage">
+          <span id="vigenere-input-label" class="stage-label">입력 글자</span>
+          <div id="vigenere-input-row" class="cell-strip"></div>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">반복 키</span>
+          <div id="vigenere-key-row" class="cell-strip"></div>
+        </div>
+        <div class="mini-stage">
+          <span id="vigenere-output-label" class="stage-label">출력 글자</span>
+          <div id="vigenere-output-row" class="cell-strip"></div>
+        </div>
+      </div>
+      <div class="result-block">
+        <h3>반복 키 스트림</h3>
+        <p id="vigenere-keystream" class="mono-output compact"></p>
+      </div>
+    </article>
+  </div>
+</section>
 
       <section id="enigma" class="lab-section fade-up">
-        <div class="section-heading">
-          <p class="section-kicker">4. 로터 기계</p>
-          <h2>애니그마: 글자를 칠 때마다 치환표가 회전한다</h2>
-          <p>
-            애니그마는 오른쪽 로터가 매 글자마다 한 칸씩 돌고, 그 때문에 같은 글자도 매번 다르게 암호화됩니다.
-            아래의 경로 시각화는 한 글자가 로터를 통과하고 되돌아오는 과정을 단순화해 보여 줍니다.
-          </p>
+  <div class="section-heading">
+    <p class="section-kicker">4. 로터 기계</p>
+    <h2>애니그마: 글자를 칠 때마다 기계의 내부 상태가 바뀐다</h2>
+    <p>
+      애니그마는 내부 배선이 고정된 로터와 반사판을 넣어 만든 전기-기계식 암호기였습니다.
+      키를 한 번 누를 때마다 오른쪽 로터가 한 칸 돌고, 전류가 지나는 배선 위치가 달라져서 같은 글자도 다음 순간에는 다른 글자로 바뀝니다.
+    </p>
+  </div>
+  <div class="lab-grid enigma-grid">
+    <article class="panel theory-panel">
+      <h3>기계 구조를 먼저 보기</h3>
+      <div class="component-strip vertical-strip">
+        <div class="component-card"><span>입력</span><strong>Keyboard</strong></div>
+        <div class="component-card"><span>배선 교환</span><strong>Plugboard</strong></div>
+        <div class="component-card"><span>회전 부품</span><strong>Right / Middle / Left Rotor</strong></div>
+        <div class="component-card"><span>되돌림</span><strong>Reflector</strong></div>
+        <div class="component-card"><span>출력</span><strong>Lampboard</strong></div>
+      </div>
+      <div class="detail-stack">
+        <div class="compare-card">
+          <strong>1. 키보드에서 글자가 들어간다</strong>
+          <p>입력 글자는 먼저 플러그보드에서 한 번 바뀔 수 있습니다.</p>
         </div>
-        <div class="lab-grid enigma-grid">
-          <article class="panel theory-panel">
-            <h3>관찰 포인트</h3>
-            <ul class="list">
-              <li>오른쪽 로터는 매 타자마다 한 칸 회전합니다.</li>
-              <li>반사판 덕분에 같은 설정이면 암호화와 복호화를 같은 기계로 할 수 있습니다.</li>
-              <li>단순 빈도 분석이 바로 통하지 않는 이유가 여기서 생깁니다.</li>
-            </ul>
-            <div class="concept-callout warning">
-              <strong>정확성 메모:</strong> 실제 전쟁에서 애니그마 해독에는 추상적 튜링 머신이 아니라,
-              튜링이 설계에 기여한 <em>봄브(Bombe)</em>라는 탐색 기계가 쓰였습니다.
-            </div>
-          </article>
-          <article class="panel lab-panel">
-            <div class="triple-grid">
-              <label>왼쪽 로터
-                <select id="enigma-left-rotor">
-                  <option value="I">I</option>
-                  <option value="II">II</option>
-                  <option value="III">III</option>
-                  <option value="IV">IV</option>
-                  <option value="V">V</option>
-                </select>
-              </label>
-              <label>가운데 로터
-                <select id="enigma-middle-rotor">
-                  <option value="I">I</option>
-                  <option value="II" selected>II</option>
-                  <option value="III">III</option>
-                  <option value="IV">IV</option>
-                  <option value="V">V</option>
-                </select>
-              </label>
-              <label>오른쪽 로터
-                <select id="enigma-right-rotor">
-                  <option value="I">I</option>
-                  <option value="II">II</option>
-                  <option value="III" selected>III</option>
-                  <option value="IV">IV</option>
-                  <option value="V">V</option>
-                </select>
-              </label>
-            </div>
-            <div class="triple-grid">
-              <label>왼쪽 창
-                <input id="enigma-left-position" type="text" maxlength="1" value="A">
-              </label>
-              <label>가운데 창
-                <input id="enigma-middle-position" type="text" maxlength="1" value="A">
-              </label>
-              <label>오른쪽 창
-                <input id="enigma-right-position" type="text" maxlength="1" value="A">
-              </label>
-            </div>
-            <label for="enigma-plugboard">플러그보드 쌍 (예: AB CD EF)</label>
-            <input id="enigma-plugboard" type="text" value="">
-            <label for="enigma-input">입력 문자열</label>
-            <textarea id="enigma-input" rows="4">ENIGMA HELPS TEACH WHY COMPUTERS WERE BUILT</textarea>
-            <div class="button-row">
-              <button id="enigma-run" class="button primary" type="button">암호화 / 복호화</button>
-              <button id="enigma-example" class="button ghost" type="button">예시 불러오기</button>
-              <button id="enigma-reset" class="button secondary" type="button">창 위치 초기화</button>
-            </div>
-            <div class="result-block">
-              <h3>출력</h3>
-              <p id="enigma-output" class="mono-output"></p>
-            </div>
-            <div class="rotor-state">
-              <span class="rotor-chip" id="enigma-window-left">A</span>
-              <span class="rotor-chip" id="enigma-window-middle">A</span>
-              <span class="rotor-chip" id="enigma-window-right">A</span>
-            </div>
-            <div class="visual-block enigma-visual-block">
-              <div class="visual-head">
-                <h3>한 글자 경로 시각화</h3>
-                <p id="enigma-visual-caption" class="helper-text"></p>
-              </div>
-              <div class="mini-stage">
-                <span class="stage-label">앞부분 글자 흐름</span>
-                <div id="enigma-letter-film" class="pair-stream"></div>
-              </div>
-              <div class="path-grid">
-                <div class="path-node"><span>입력</span><strong id="enigma-path-input">-</strong></div>
-                <div class="path-node"><span>플러그보드</span><strong id="enigma-path-plug">-</strong></div>
-                <div class="path-node"><span>오른쪽 로터</span><strong id="enigma-path-right">-</strong></div>
-                <div class="path-node"><span>가운데 로터</span><strong id="enigma-path-middle">-</strong></div>
-                <div class="path-node"><span>왼쪽 로터</span><strong id="enigma-path-left">-</strong></div>
-                <div class="path-node"><span>반사판</span><strong id="enigma-path-reflector">-</strong></div>
-                <div class="path-node"><span>되돌아옴</span><strong id="enigma-path-back">-</strong></div>
-                <div class="path-node"><span>출력</span><strong id="enigma-path-output">-</strong></div>
-              </div>
-            </div>
-            <div class="result-block">
-              <h3>앞 12글자 추적</h3>
-              <div id="enigma-trace" class="trace-table"></div>
-            </div>
-            <p id="enigma-message" class="helper-text"></p>
-          </article>
+        <div class="compare-card">
+          <strong>2. 세 개의 로터를 통과한다</strong>
+          <p>오른쪽에서 왼쪽으로 통과하면서 배선에 따라 글자가 계속 바뀝니다.</p>
         </div>
-      </section>
+        <div class="compare-card">
+          <strong>3. 반사판에서 되돌아온다</strong>
+          <p>반사판 덕분에 다시 로터를 거쳐 돌아오며, 같은 설정이면 복호화도 같은 기계로 할 수 있습니다.</p>
+        </div>
+        <div class="compare-card">
+          <strong>4. 다음 글자에서는 창 위치가 달라진다</strong>
+          <p>오른쪽 로터가 돌기 때문에 같은 글자를 다시 입력해도 다른 결과가 나옵니다.</p>
+        </div>
+      </div>
+      <div class="concept-callout warning">
+        <strong>중요:</strong> 실제 애니그마 해독에 쓰인 것은 추상적 튜링 머신 자체가 아니라,
+        튜링이 설계에 기여한 <em>봄브(Bombe)</em>라는 탐색 기계였습니다.
+      </div>
+    </article>
+    <article class="panel lab-panel">
+      <div class="triple-grid">
+        <label>왼쪽 로터
+          <select id="enigma-left-rotor">
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+        </label>
+        <label>가운데 로터
+          <select id="enigma-middle-rotor">
+            <option value="I">I</option>
+            <option value="II" selected>II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+        </label>
+        <label>오른쪽 로터
+          <select id="enigma-right-rotor">
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III" selected>III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+        </label>
+      </div>
+      <div class="triple-grid">
+        <label>왼쪽 창
+          <input id="enigma-left-position" type="text" maxlength="1" value="A">
+        </label>
+        <label>가운데 창
+          <input id="enigma-middle-position" type="text" maxlength="1" value="A">
+        </label>
+        <label>오른쪽 창
+          <input id="enigma-right-position" type="text" maxlength="1" value="A">
+        </label>
+      </div>
+      <label for="enigma-plugboard">플러그보드 쌍 (예: AB CD EF)</label>
+      <input id="enigma-plugboard" type="text" value="">
+      <label for="enigma-input">입력 문자열</label>
+      <textarea id="enigma-input" rows="4">ENIGMA HELPS TEACH WHY COMPUTERS WERE BUILT</textarea>
+      <p class="helper-text">먼저 짧은 단어로 실행해 보고, 바로 아래의 경로 표에서 입력 글자가 플러그보드, 로터, 반사판을 지나며 어떻게 바뀌는지 한 칸씩 따라가 보세요.</p>
+      <div class="button-row">
+        <button id="enigma-run" class="button primary" type="button">암호화 / 복호화</button>
+        <button id="enigma-example" class="button ghost" type="button">예시 불러오기</button>
+        <button id="enigma-reset" class="button secondary" type="button">창 위치 초기화</button>
+      </div>
+      <div class="result-block">
+        <h3>출력</h3>
+        <p id="enigma-output" class="mono-output"></p>
+      </div>
+      <div class="rotor-state">
+        <span class="rotor-chip" id="enigma-window-left">A</span>
+        <span class="rotor-chip" id="enigma-window-middle">A</span>
+        <span class="rotor-chip" id="enigma-window-right">A</span>
+      </div>
+      <div class="visual-block enigma-visual-block">
+        <div class="visual-head">
+          <h3>한 글자 경로 시각화</h3>
+          <p id="enigma-visual-caption" class="helper-text"></p>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">앞부분 글자 흐름</span>
+          <div id="enigma-letter-film" class="pair-stream"></div>
+        </div>
+        <div class="path-grid">
+          <div class="path-node"><span>입력</span><strong id="enigma-path-input">-</strong></div>
+          <div class="path-node"><span>플러그보드</span><strong id="enigma-path-plug">-</strong></div>
+          <div class="path-node"><span>오른쪽 로터</span><strong id="enigma-path-right">-</strong></div>
+          <div class="path-node"><span>가운데 로터</span><strong id="enigma-path-middle">-</strong></div>
+          <div class="path-node"><span>왼쪽 로터</span><strong id="enigma-path-left">-</strong></div>
+          <div class="path-node"><span>반사판</span><strong id="enigma-path-reflector">-</strong></div>
+          <div class="path-node"><span>되돌아옴</span><strong id="enigma-path-back">-</strong></div>
+          <div class="path-node"><span>출력</span><strong id="enigma-path-output">-</strong></div>
+        </div>
+      </div>
+      <div class="result-block">
+        <h3>앞 12글자 추적</h3>
+        <div id="enigma-trace" class="trace-table"></div>
+      </div>
+      <p id="enigma-message" class="helper-text"></p>
+    </article>
+  </div>
+</section>
 
       <section id="bombe" class="lab-section fade-up">
-        <div class="section-heading">
-          <p class="section-kicker">5. 기계적 탐색</p>
-          <h2>봄브 체험: 사람이 추정한 평문 조각을 기계가 검사한다</h2>
-          <p>
-            크립(crib)은 "이 부분엔 아마 이런 단어가 있었을 것"이라는 사람의 추정입니다.
-            봄브는 그 추정을 바탕으로 가능한 설정을 대량으로 줄여 나가는 탐색 기계였습니다.
-          </p>
+  <div class="section-heading">
+    <p class="section-kicker">5. 기계적 탐색</p>
+    <h2>봄브: 사람이 세운 가설을 기계가 매우 빠르게 걸러 낸다</h2>
+    <p>
+      애니그마는 설정 경우의 수가 너무 많아서 사람이 손으로 하나씩 시험하기 어려웠습니다.
+      그래서 먼저 사람이 "이 위치엔 아마 이런 단어가 있었을 것"이라고 가설을 세우고, 봄브가 그 가설과 맞지 않는 설정을 대량으로 탈락시켰습니다.
+    </p>
+  </div>
+  <div class="lab-grid">
+    <article class="panel theory-panel">
+      <h3>봄브를 이해하는 순서</h3>
+      <div class="detail-stack">
+        <div class="compare-card">
+          <strong>1. 크립(crib)을 잡는다</strong>
+          <p>암호문 어딘가에 <code>WORLD</code>, <code>WEATHER</code> 같은 단어가 있었을 것이라고 짐작합니다. 이것이 출발점입니다.</p>
         </div>
-        <div class="lab-grid">
-          <article class="panel theory-panel">
-            <h3>관찰 포인트</h3>
-            <ul class="list">
-              <li>애니그마는 같은 글자를 자기 자신으로 암호화하지 않습니다.</li>
-              <li>그래서 어떤 정렬은 겹쳐 보기만 해도 바로 탈락합니다.</li>
-              <li>이후 남은 경우만 기계가 빠르게 검사합니다.</li>
-            </ul>
-            <div class="concept-callout">
-              <strong>미션:</strong> 크립을 바꿔 보며 탈락하는 정렬과 남는 정렬이 어떻게 달라지는지 확인해 보세요.
-            </div>
-          </article>
-          <article class="panel lab-panel">
-            <div class="triple-grid">
-              <label>왼쪽 로터
-                <select id="bombe-left-rotor">
-                  <option value="I">I</option>
-                  <option value="II">II</option>
-                  <option value="III">III</option>
-                  <option value="IV">IV</option>
-                  <option value="V">V</option>
-                </select>
-              </label>
-              <label>가운데 로터
-                <select id="bombe-middle-rotor">
-                  <option value="I">I</option>
-                  <option value="II" selected>II</option>
-                  <option value="III">III</option>
-                  <option value="IV">IV</option>
-                  <option value="V">V</option>
-                </select>
-              </label>
-              <label>오른쪽 로터
-                <select id="bombe-right-rotor">
-                  <option value="I">I</option>
-                  <option value="II">II</option>
-                  <option value="III" selected>III</option>
-                  <option value="IV">IV</option>
-                  <option value="V">V</option>
-                </select>
-              </label>
-            </div>
-            <label for="bombe-ciphertext">암호문</label>
-            <textarea id="bombe-ciphertext" rows="4">ILBDA AMTAZ BERNM X</textarea>
-            <label for="bombe-crib">추정 평문 조각(crib)</label>
-            <input id="bombe-crib" type="text" value="WORLD">
-            <div class="button-row">
-              <button id="bombe-run" class="button primary" type="button">탐색 실행</button>
-              <button id="bombe-example" class="button ghost" type="button">예시 불러오기</button>
-            </div>
-            <div class="visual-block">
-              <div class="visual-head">
-                <h3>정렬 시각화</h3>
-                <p id="bombe-visual-caption" class="helper-text"></p>
-              </div>
-              <div class="mini-stage">
-                <span class="stage-label">암호문</span>
-                <div id="bombe-cipher-track" class="cell-strip wide"></div>
-              </div>
-              <div class="mini-stage">
-                <span class="stage-label">크립</span>
-                <div id="bombe-crib-track" class="cell-strip wide"></div>
-              </div>
-            </div>
-            <div class="insight-grid">
-              <article class="insight-card">
-                <h3>정렬 요약</h3>
-                <p id="bombe-summary"></p>
-              </article>
-              <article class="insight-card">
-                <h3>검색 메모</h3>
-                <p id="bombe-note"></p>
-              </article>
-            </div>
-            <div class="result-block">
-              <h3>정렬별 결과</h3>
-              <div id="bombe-alignments" class="ranking-list"></div>
-            </div>
-            <div class="result-block">
-              <h3>후보 창 위치</h3>
-              <div id="bombe-candidates" class="candidate-list"></div>
-            </div>
-          </article>
+        <div class="compare-card">
+          <strong>2. 암호문 위에 한 칸씩 겹쳐 본다</strong>
+          <p>크립을 왼쪽부터 오른쪽으로 한 칸씩 옮겨 가며 겹치면, 어떤 위치에서는 글자끼리 부딪히며 즉시 모순이 드러납니다.</p>
         </div>
-      </section>
+        <div class="compare-card">
+          <strong>3. 같은 글자 금지 규칙으로 빠르게 탈락시킨다</strong>
+          <p>애니그마는 어떤 순간에도 글자를 자기 자신으로 암호화하지 않습니다. 그래서 <code>W</code>와 <code>W</code>가 같은 칸에서 만나면 그 정렬은 바로 버릴 수 있습니다.</p>
+        </div>
+        <div class="compare-card">
+          <strong>4. 남은 후보만 더 깊게 조사한다</strong>
+          <p>이렇게 1차로 살아남은 정렬만 로터 위치와 배선 가능성을 더 자세히 확인합니다. 봄브의 힘은 "정답 찍기"보다 "불가능한 것 지우기"에 있었습니다.</p>
+        </div>
+      </div>
+      <div class="concept-callout warning">
+        <strong>중요:</strong> 봄브는 추상적인 수학 공식 한 줄이 아니라, 회전 드럼과 전기 회로로 가능한 설정을 매우 빠르게 검사하는 전기-기계식 해독 장치였습니다.
+      </div>
+    </article>
+    <article class="panel lab-panel">
+      <div class="triple-grid">
+        <label>왼쪽 로터
+          <select id="bombe-left-rotor">
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+        </label>
+        <label>가운데 로터
+          <select id="bombe-middle-rotor">
+            <option value="I">I</option>
+            <option value="II" selected>II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+        </label>
+        <label>오른쪽 로터
+          <select id="bombe-right-rotor">
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III" selected>III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+          </select>
+        </label>
+      </div>
+      <label for="bombe-ciphertext">암호문</label>
+      <textarea id="bombe-ciphertext" rows="4">ILBDA AMTAZ BERNM X</textarea>
+      <label for="bombe-crib">추정 평문 조각(crib)</label>
+      <input id="bombe-crib" type="text" value="WORLD">
+      <p class="helper-text">예시를 실행하면 크립을 암호문에 한 칸씩 겹쳐 보면서, 어디가 즉시 모순으로 탈락하는지 관찰할 수 있습니다.</p>
+      <div class="button-row">
+        <button id="bombe-run" class="button primary" type="button">탐색 실행</button>
+        <button id="bombe-example" class="button ghost" type="button">예시 불러오기</button>
+      </div>
+      <div class="visual-block">
+        <div class="visual-head">
+          <h3>정렬 시각화</h3>
+          <p id="bombe-visual-caption" class="helper-text"></p>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">암호문</span>
+          <div id="bombe-cipher-track" class="cell-strip wide"></div>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">크립</span>
+          <div id="bombe-crib-track" class="cell-strip wide"></div>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <article class="insight-card">
+          <h3>정렬 요약</h3>
+          <p id="bombe-summary"></p>
+        </article>
+        <article class="insight-card">
+          <h3>검색 메모</h3>
+          <p id="bombe-note"></p>
+        </article>
+      </div>
+      <div class="result-block">
+        <h3>정렬별 결과</h3>
+        <div id="bombe-alignments" class="ranking-list"></div>
+      </div>
+      <div class="result-block">
+        <h3>후보 창 위치</h3>
+        <div id="bombe-candidates" class="candidate-list"></div>
+      </div>
+    </article>
+  </div>
+</section>
 
       <section id="turing-machine" class="lab-section fade-up">
-        <div class="section-heading">
-          <p class="section-kicker">6. 계산의 추상화</p>
-          <h2>튜링 머신: 규칙만 있으면 기계가 절차를 따라갈 수 있다</h2>
-          <p>
-            아래 버튼을 눌러 한 단계씩 실행해 보세요. 상태, 헤드 위치, 테이프가 같이 바뀌는 모습을 보면
-            계산이란 결국 "규칙에 따라 기호를 읽고 쓰는 절차"라는 점이 보입니다.
-          </p>
+  <div class="section-heading">
+    <p class="section-kicker">6. 규칙 기계</p>
+    <h2>튜링 머신: 봄브가 하던 "규칙 검사"를 가장 단순한 기계로 다시 본다</h2>
+    <p>
+      실제 애니그마를 대량 해독한 장치는 봄브였지만, 튜링 머신은 "기호를 읽고, 규칙에 따라 움직이고, 결과를 남긴다"는 계산의 핵심을 가장 단순하게 보여 줍니다.
+      아래에서는 애니그마 해독의 중요한 규칙 하나를 아주 작은 튜링 머신 절차로 체험합니다.
+    </p>
+  </div>
+  <div class="lab-grid">
+    <article class="panel theory-panel">
+      <h3>이 체험을 어떻게 보면 좋을까?</h3>
+      <div class="detail-stack">
+        <div class="compare-card">
+          <strong>입력 형식: <code>A#B</code></strong>
+          <p><code>#</code> 왼쪽은 "암호문 글자", 오른쪽은 "가정한 평문 글자"라고 생각해 보세요. 예를 들어 <code>A#A</code>는 같은 글자가 만난 경우입니다.</p>
         </div>
-        <div class="lab-grid">
-          <article class="panel theory-panel">
-            <h3>관찰 포인트</h3>
-            <ul class="list">
-              <li>기계는 현재 상태와 읽은 기호에 따라 다음 행동을 결정합니다.</li>
-              <li>사람의 직관 대신, 규칙표가 절차 전체를 이끕니다.</li>
-              <li>이 아이디어가 나중에 저장 프로그램 컴퓨터로 이어집니다.</li>
-            </ul>
-          </article>
-          <article class="panel lab-panel">
-            <div class="inline-controls">
-              <label for="tm-preset">예제 머신</label>
-              <select id="tm-preset">
-                <option value="unaryIncrement">단항 +1</option>
-                <option value="binaryIncrement">이진수 +1</option>
-                <option value="eraseToBlank">모두 지우기</option>
-              </select>
-            </div>
-            <label for="tm-input">초기 테이프</label>
-            <input id="tm-input" type="text" value="1011">
-            <div class="button-row">
-              <button id="tm-load" class="button secondary" type="button">머신 불러오기</button>
-              <button id="tm-step" class="button primary" type="button">한 단계</button>
-              <button id="tm-burst" class="button ghost" type="button">10단계 실행</button>
-              <button id="tm-reset" class="button ghost" type="button">리셋</button>
-            </div>
-            <div class="status-row">
-              <div class="status-pill">상태 <strong id="tm-state">scan</strong></div>
-              <div class="status-pill">헤드 <strong id="tm-head">0</strong></div>
-              <div class="status-pill">단계 <strong id="tm-steps">0</strong></div>
-            </div>
-            <div class="result-block">
-              <h3>테이프</h3>
-              <div id="tm-tape" class="tape"></div>
-            </div>
-            <div class="result-block">
-              <h3>전이 규칙</h3>
-              <div id="tm-table" class="trace-table"></div>
-            </div>
-            <div class="result-block">
-              <h3>최근 동작</h3>
-              <p id="tm-log" class="helper-text"></p>
-            </div>
-          </article>
+        <div class="compare-card">
+          <strong>1. 첫 글자를 읽고 기억한다</strong>
+          <p>머신은 현재 상태로 첫 글자가 A였는지 B였는지 기억합니다. 이 작은 상태 기억이 나중 비교에 쓰입니다.</p>
         </div>
-      </section>
+        <div class="compare-card">
+          <strong>2. 구분 기호 <code>#</code>를 지나 오른쪽 글자로 간다</strong>
+          <p>이 과정은 "같은 위치에 겹쳐 놓은 두 글자를 비교하러 간다"고 생각하면 됩니다.</p>
+        </div>
+        <div class="compare-card">
+          <strong>3. 같으면 모순 표시 <code>!</code>, 다르면 통과</strong>
+          <p>애니그마는 글자를 자기 자신으로 보내지 못하므로, 두 글자가 같으면 그 가설은 탈락입니다. 여기서는 그 모순을 <code>!</code>로 남깁니다.</p>
+        </div>
+        <div class="compare-card">
+          <strong>4. 봄브와의 연결</strong>
+          <p>봄브는 이런 종류의 규칙 검사를 엄청나게 많은 후보 설정에 대해 동시에 빠르게 수행했습니다. 여기서는 그 생각의 아주 작은 조각을 눈으로 보는 것입니다.</p>
+        </div>
+      </div>
+      <div class="concept-callout warning">
+        <strong>정리:</strong> "튜링 머신으로 애니그마를 직접 돌렸다"기보다,
+        애니그마 해독에 필요한 규칙 검사가 어떻게 절차로 표현될 수 있는지를 튜링 머신으로 체험한다고 이해하면 정확합니다.
+      </div>
+    </article>
+    <article class="panel lab-panel">
+      <div class="inline-controls">
+        <label for="tm-preset">예제 머신</label>
+        <select id="tm-preset">
+          <option value="selfMapCheck">자기 자신 금지 검사</option>
+          <option value="unaryIncrement">단항 +1</option>
+          <option value="binaryIncrement">이진수 +1</option>
+          <option value="eraseToBlank">모두 지우기</option>
+        </select>
+      </div>
+      <label for="tm-input">초기 테이프</label>
+      <input id="tm-input" type="text" value="A#A">
+      <p class="helper-text">이 작은 예제는 A와 B 비교용입니다. 먼저 <code>A#A</code>로 실행해 모순 표시가 남는지 보고, 이어서 <code>A#B</code>로 바꿔 통과하는지도 비교해 보세요.</p>
+      <div class="button-row">
+        <button id="tm-load" class="button secondary" type="button">머신 불러오기</button>
+        <button id="tm-step" class="button primary" type="button">한 단계</button>
+        <button id="tm-burst" class="button ghost" type="button">10단계 실행</button>
+        <button id="tm-reset" class="button ghost" type="button">리셋</button>
+      </div>
+      <div class="status-row">
+        <div class="status-pill">상태 <strong id="tm-state">scan</strong></div>
+        <div class="status-pill">헤드 <strong id="tm-head">0</strong></div>
+        <div class="status-pill">단계 <strong id="tm-steps">0</strong></div>
+      </div>
+      <div class="result-block">
+        <h3>테이프</h3>
+        <div id="tm-tape" class="tape"></div>
+      </div>
+      <div class="result-block">
+        <h3>전이 규칙</h3>
+        <div id="tm-table" class="trace-table"></div>
+      </div>
+      <div class="result-block">
+        <h3>최근 동작</h3>
+        <p id="tm-log" class="helper-text"></p>
+      </div>
+    </article>
+  </div>
+</section>
 
-      <section id="von-neumann" class="lab-section fade-up">
-        <div class="section-heading">
-          <p class="section-kicker">7. 저장 프로그램 구조</p>
-          <h2>폰 노이만 구조: 규칙을 메모리에 넣고 CPU가 읽어 실행한다</h2>
-          <p>
-            이제 규칙표는 메모리에 저장된 프로그램이 됩니다. `다음 단계`를 눌러 fetch, decode, execute가 어떻게 돌아가는지 직접 따라가 보세요.
-          </p>
+      <section id="computer-io" class="lab-section fade-up">
+  <div class="section-heading">
+    <p class="section-kicker">7. 컴퓨터의 기본 구조</p>
+    <h2>CPU, 레지스터, 메모리, 표준입출력</h2>
+    <p>
+      이제 암호를 계산하는 기계를 조금 더 현대적인 컴퓨터에 가깝게 봅니다.
+      입력이 들어오고, CPU가 메모리에서 명령을 읽고, 레지스터에 잠깐 저장하며 계산하고, 마지막에 출력으로 내보내는 흐름을 따라가 보세요.
+    </p>
+  </div>
+  <div class="lab-grid architecture-grid">
+    <article class="panel theory-panel">
+      <h3>컴퓨터가 일하는 기본 흐름</h3>
+      <div class="detail-stack">
+        <div class="compare-card">
+          <strong>표준입력</strong>
+          <p>키보드로 입력한 값이나 파일에서 읽어 온 값처럼, 프로그램이 바깥에서 받아들이는 정보입니다.</p>
         </div>
-        <div class="lab-grid architecture-grid">
-          <article class="panel theory-panel">
-            <h3>관찰 포인트</h3>
-            <div class="compare-card">
-              <strong>튜링 머신</strong>
-              <p>테이프와 상태 규칙으로 계산을 설명하는 추상 모델</p>
-            </div>
-            <div class="compare-card">
-              <strong>폰 노이만 구조</strong>
-              <p>프로그램과 데이터를 메모리에 저장하고 CPU가 읽어 실행하는 실제 구조</p>
-            </div>
-            <div class="concept-callout">
-              <strong>미션:</strong> 한 사이클씩 진행하면서 지금 어느 부품이 일하고 있는지 메모리와 ALU의 강조를 따라가 보세요.
-            </div>
-          </article>
-          <article class="panel lab-panel">
-            <div class="inline-controls">
-              <label for="vn-preset">예시 프로그램</label>
-              <select id="vn-preset">
-                <option value="sum">두 수 더하기</option>
-                <option value="countdown">카운트다운 출력</option>
-              </select>
-            </div>
-            <label for="vn-program">메모리 프로그램</label>
-            <textarea id="vn-program" rows="10"></textarea>
-            <div class="button-row">
-              <button id="vn-load" class="button secondary" type="button">프로그램 적재</button>
-              <button id="vn-phase" class="button primary" type="button">다음 단계</button>
-              <button id="vn-cycle" class="button ghost" type="button">한 사이클 실행</button>
-              <button id="vn-reset" class="button ghost" type="button">리셋</button>
-            </div>
-            <div class="status-row">
-              <div class="status-pill">PC <strong id="vn-pc">0</strong></div>
-              <div class="status-pill">ACC <strong id="vn-acc">0</strong></div>
-              <div class="status-pill">IR <strong id="vn-ir">-</strong></div>
-              <div class="status-pill">단계 <strong id="vn-phase-name">fetch</strong></div>
-            </div>
-            <div class="architecture-visual" id="vn-diagram">
-              <div class="arch-box" data-unit="memory">Memory</div>
-              <div class="arch-box" data-unit="control">Control Unit</div>
-              <div class="arch-box" data-unit="alu">ALU</div>
-              <div class="arch-box" data-unit="input">Input</div>
-              <div class="arch-box" data-unit="output">Output</div>
-            </div>
-            <div class="result-block">
-              <h3>메모리</h3>
-              <div id="vn-memory" class="memory-grid"></div>
-            </div>
-            <div class="result-block">
-              <h3>출력 / 로그</h3>
-              <p id="vn-output" class="helper-text"></p>
-            </div>
-          </article>
+        <div class="compare-card">
+          <strong>메모리</strong>
+          <p>명령과 데이터를 저장해 두는 공간입니다. CPU는 여기서 필요한 것을 읽어 옵니다.</p>
         </div>
-      </section>
+        <div class="compare-card">
+          <strong>레지스터</strong>
+          <p>CPU 안의 아주 작은 저장 공간입니다. 여기서는 PC, IR, ACC가 어떤 역할을 하는지 볼 수 있습니다.</p>
+        </div>
+        <div class="compare-card">
+          <strong>표준출력</strong>
+          <p>프로그램이 계산 결과를 바깥으로 내보내는 통로입니다. 화면에 숫자가 찍히는 것도 그 예입니다.</p>
+        </div>
+      </div>
+      <div class="concept-callout">
+        <strong>해 보기:</strong> 한 단계씩 실행하면서 지금 메모리, 제어장치, ALU, 출력 중 어디가 강조되는지 같이 보세요.
+      </div>
+    </article>
+    <article class="panel lab-panel">
+      <div class="inline-controls">
+        <label for="vn-preset">예시 프로그램</label>
+        <select id="vn-preset">
+          <option value="sum">두 수 더하기</option>
+          <option value="countdown">카운트다운 출력</option>
+        </select>
+      </div>
+      <label for="vn-program">메모리에 올린 작은 프로그램</label>
+      <textarea id="vn-program" rows="10"></textarea>
+      <div class="button-row">
+        <button id="vn-load" class="button secondary" type="button">프로그램 적재</button>
+        <button id="vn-phase" class="button primary" type="button">다음 단계</button>
+        <button id="vn-cycle" class="button ghost" type="button">한 사이클 실행</button>
+        <button id="vn-reset" class="button ghost" type="button">리셋</button>
+      </div>
+      <div class="status-row">
+        <div class="status-pill">PC <strong id="vn-pc">0</strong></div>
+        <div class="status-pill">ACC <strong id="vn-acc">0</strong></div>
+        <div class="status-pill">IR <strong id="vn-ir">-</strong></div>
+        <div class="status-pill">단계 <strong id="vn-phase-name">fetch</strong></div>
+      </div>
+      <div class="architecture-visual" id="vn-diagram">
+        <div class="arch-box" data-unit="input">표준입력</div>
+        <div class="arch-box" data-unit="memory">메모리</div>
+        <div class="arch-box" data-unit="control">제어장치</div>
+        <div class="arch-box" data-unit="alu">ALU / 레지스터</div>
+        <div class="arch-box" data-unit="output">표준출력</div>
+      </div>
+      <div class="result-block">
+        <h3>메모리</h3>
+        <div id="vn-memory" class="memory-grid"></div>
+      </div>
+      <div class="result-block">
+        <h3>출력 / 로그</h3>
+        <p id="vn-output" class="helper-text"></p>
+      </div>
+    </article>
+  </div>
+</section>
     </main>
   </div>
 </body>
 </html>
+
+
+
+
+
+
