@@ -1,4 +1,4 @@
-﻿const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const englishFrequencies = {
   A: 8.167, B: 1.492, C: 2.782, D: 4.253, E: 12.702, F: 2.228, G: 2.015,
   H: 6.094, I: 6.966, J: 0.153, K: 0.772, L: 4.025, M: 2.406, N: 6.749,
@@ -1488,48 +1488,6 @@ function updateBombe() {
 }
 
 function attachEvents() {
-  document.querySelector("#scytale-encode").addEventListener("click", () => updateScytale("encode"));
-  document.querySelector("#scytale-decode").addEventListener("click", () => updateScytale("decode"));
-  document.querySelector("#scytale-example").addEventListener("click", () => {
-    document.querySelector("#scytale-input").value = "HISTORYOFCOMPUTINGSTARTSWITHCIPHERS";
-    document.querySelector("#scytale-columns").value = "6";
-    updateScytale("encode");
-  });
-
-  document.querySelector("#caesar-input").addEventListener("input", () => {
-    updateCaesarTransform(caesarMode);
-    updateCaesarAnalysis();
-  });
-  document.querySelector("#caesar-shift").addEventListener("input", (event) => {
-    setText("#caesar-shift-value", event.target.value);
-    updateCaesarTransform(caesarMode);
-    updateCaesarAnalysis();
-  });
-  document.querySelector("#caesar-encode").addEventListener("click", () => {
-    updateCaesarTransform("encode");
-    updateCaesarAnalysis();
-  });
-  document.querySelector("#caesar-decode").addEventListener("click", () => {
-    updateCaesarTransform("decode");
-    updateCaesarAnalysis();
-  });
-  document.querySelector("#caesar-analyze").addEventListener("click", updateCaesarAnalysis);
-  document.querySelector("#caesar-example").addEventListener("click", () => {
-    document.querySelector("#caesar-input").value = "WKLV LV D FLSKHU IRU FODVVURRP GLVFXVVLRQ";
-    document.querySelector("#caesar-shift").value = "3";
-    setText("#caesar-shift-value", "3");
-    updateCaesarTransform("decode");
-    updateCaesarAnalysis();
-  });
-
-  document.querySelector("#vigenere-encode").addEventListener("click", () => updateVigenere("encode"));
-  document.querySelector("#vigenere-decode").addEventListener("click", () => updateVigenere("decode"));
-  document.querySelector("#vigenere-example").addEventListener("click", () => {
-    document.querySelector("#vigenere-input").value = "SECRETSBECAMEINDUSTRIALSCALE";
-    document.querySelector("#vigenere-key").value = "ALAN";
-    updateVigenere("encode");
-  });
-
   document.querySelector("#enigma-run").addEventListener("click", updateEnigma);
   document.querySelector("#enigma-example").addEventListener("click", () => {
     document.querySelector("#enigma-left-rotor").value = "I";
