@@ -1624,3 +1624,282 @@ code {
     max-height: 260px;
   }
 }
+
+.reference-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.theory-panel .wiki-figure {
+  margin-top: 0;
+}
+
+.machine-card-dark {
+  background:
+    linear-gradient(180deg, rgba(18, 24, 34, 0.98), rgba(10, 15, 24, 0.98)),
+    linear-gradient(135deg, rgba(99, 196, 255, 0.08), transparent 48%);
+}
+
+.machine-card-dark .machine-caption {
+  line-height: 1.55;
+}
+
+.enigma-hardware {
+  grid-template-columns: minmax(110px, 1fr) minmax(110px, 1fr) repeat(3, minmax(110px, 1.1fr)) minmax(110px, 1fr) minmax(110px, 1fr);
+  position: relative;
+  overflow: visible;
+}
+
+.enigma-hardware::before {
+  content: "";
+  position: absolute;
+  inset: 18px 18px auto;
+  height: calc(100% - 36px);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.enigma-module {
+  position: relative;
+  overflow: hidden;
+  padding-top: 44px;
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.enigma-module::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 14px;
+  height: 20px;
+  border-radius: 999px;
+  opacity: 0.75;
+}
+
+#enigma-hw-keyboard::before {
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px) 0 0 / 16px 16px,
+    linear-gradient(90deg, rgba(141, 157, 182, 0.35), rgba(141, 157, 182, 0.08));
+}
+
+#enigma-hw-plug::before {
+  background:
+    radial-gradient(circle, rgba(99, 196, 255, 0.75) 0 2px, transparent 3px) 0 0 / 18px 18px,
+    linear-gradient(90deg, rgba(99, 196, 255, 0.24), rgba(99, 196, 255, 0.06));
+}
+
+.enigma-module.rotor {
+  --rotor-angle: 0deg;
+}
+
+.enigma-module.rotor::before {
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  bottom: 12px;
+  height: auto;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.12) 0 34%, transparent 35%),
+    repeating-conic-gradient(from var(--rotor-angle), rgba(255, 208, 117, 0.32) 0 10deg, rgba(21, 29, 41, 0.1) 10deg 20deg);
+  border: 2px solid rgba(255, 208, 117, 0.22);
+  box-shadow: inset 0 0 0 12px rgba(13, 19, 29, 0.62), inset 0 0 32px rgba(0, 0, 0, 0.35);
+  transition: transform 260ms ease;
+}
+
+.enigma-module.rotor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #d7e8ff;
+  box-shadow: 0 0 0 6px rgba(17, 24, 39, 0.72);
+}
+
+.enigma-module span,
+.enigma-module strong,
+.enigma-module em {
+  position: relative;
+  z-index: 2;
+}
+
+.enigma-module strong {
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+}
+
+.enigma-module em {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  min-width: 34px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+#enigma-hw-reflector::before {
+  background:
+    linear-gradient(135deg, rgba(255, 208, 117, 0.35), rgba(99, 196, 255, 0.18)),
+    linear-gradient(90deg, transparent 0 45%, rgba(255, 255, 255, 0.7) 45% 55%, transparent 55% 100%);
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+#enigma-hw-lamp::before {
+  background:
+    radial-gradient(circle, rgba(255, 208, 117, 0.9) 0 3px, transparent 4px) 0 0 / 18px 18px,
+    linear-gradient(90deg, rgba(255, 208, 117, 0.2), rgba(255, 208, 117, 0.04));
+}
+
+.enigma-module.active {
+  transform: translateY(-4px);
+}
+
+.bombe-machine {
+  grid-template-columns: minmax(0, 1fr) auto;
+  position: relative;
+  overflow: visible;
+}
+
+.bombe-machine::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.bombe-bank {
+  align-items: end;
+}
+
+.bombe-drum {
+  --drum-angle: 0deg;
+  overflow: hidden;
+  transition: transform 220ms ease;
+}
+
+.bombe-drum::before {
+  content: "";
+  position: absolute;
+  inset: 10px 18px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.12) 0 30%, transparent 31%),
+    repeating-linear-gradient(90deg, rgba(255, 208, 117, 0.5) 0 2px, rgba(0, 0, 0, 0) 2px 10px);
+  transform: rotate(var(--drum-angle));
+  transition: transform 300ms ease;
+}
+
+.bombe-drum strong,
+.bombe-drum span {
+  position: relative;
+  z-index: 1;
+}
+
+.bombe-drum strong {
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+}
+
+.bombe-lamps {
+  padding: 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bombe-lamp {
+  position: relative;
+}
+
+.bombe-lamp::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  opacity: 0.35;
+}
+
+.tm-machine {
+  grid-template-columns: 88px 1fr 88px;
+}
+
+.tm-reel {
+  --reel-angle: 0deg;
+  position: relative;
+  transform: rotate(var(--reel-angle));
+  transition: transform 260ms ease;
+}
+
+.tm-reel::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(rgba(255, 255, 255, 0.75) 0 8deg, rgba(99, 196, 255, 0.22) 8deg 18deg);
+  box-shadow: inset 0 0 0 12px rgba(17, 24, 39, 0.5);
+}
+
+.tm-machine-slot {
+  overflow: hidden;
+}
+
+.tm-machine-slot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  bottom: 10px;
+  width: 82px;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  border: 2px solid rgba(255, 208, 117, 0.28);
+  background: rgba(255, 208, 117, 0.05);
+}
+
+.tm-head-arm::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 22px;
+  height: 22px;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ffd075, #c78726);
+}
+
+.tm-machine-track {
+  grid-template-columns: repeat(5, minmax(54px, 1fr));
+  align-items: end;
+}
+
+.tm-machine-cell {
+  min-height: 62px;
+  padding-top: 6px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.tm-machine-cell.active {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(99, 196, 255, 0.2);
+}
+
+@media (max-width: 980px) {
+  .reference-stack {
+    gap: 14px;
+  }
+
+  .enigma-hardware {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
