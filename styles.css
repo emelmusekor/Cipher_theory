@@ -1390,3 +1390,237 @@ code {
     width: 82%;
   }
 }
+
+.wiki-figure {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(24, 38, 58, 0.1);
+}
+
+.wiki-image {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 252, 246, 0.92);
+  border: 1px solid rgba(24, 38, 58, 0.08);
+}
+
+.scytale-reference-image {
+  max-height: 260px;
+}
+
+.vigenere-reference-image {
+  max-height: 360px;
+}
+
+.source-note {
+  margin: 10px 0 0;
+  font-size: 0.88rem;
+}
+
+.source-note a {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+.source-note a:hover {
+  text-decoration: underline;
+}
+
+.machine-card-dark {
+  background: linear-gradient(180deg, rgba(25, 33, 46, 0.96), rgba(18, 25, 36, 0.96));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.machine-card-dark .machine-head,
+.machine-card-dark .machine-caption,
+.machine-card-dark .compare-card p,
+.machine-card-dark .source-note {
+  color: #dbe6f4;
+}
+
+.machine-card-dark .machine-figure {
+  background:
+    radial-gradient(circle at top left, rgba(99, 196, 255, 0.16), transparent 32%),
+    linear-gradient(180deg, rgba(22, 30, 42, 1), rgba(13, 19, 29, 1));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.machine-card-dark .machine-figure::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  opacity: 0.24;
+}
+
+.enigma-hardware {
+  min-height: 230px;
+  padding: 22px;
+  gap: 14px;
+}
+
+.enigma-hardware::after {
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255, 208, 117, 0.24), rgba(99, 196, 255, 0.6), rgba(255, 208, 117, 0.24));
+  box-shadow: 0 0 16px rgba(99, 196, 255, 0.18);
+}
+
+.enigma-module {
+  min-height: 136px;
+  background: rgba(33, 44, 60, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.enigma-module.rotor {
+  background: linear-gradient(180deg, rgba(65, 78, 96, 0.96), rgba(35, 44, 58, 0.96));
+}
+
+.enigma-module span {
+  color: rgba(219, 230, 244, 0.76);
+}
+
+.enigma-module strong,
+.enigma-module em {
+  color: #f6fbff;
+}
+
+.enigma-module em {
+  background: rgba(255, 208, 117, 0.16);
+  border: 1px solid rgba(255, 208, 117, 0.18);
+}
+
+.enigma-module.active {
+  background: rgba(48, 91, 134, 0.96);
+  box-shadow: 0 0 0 10px rgba(99, 196, 255, 0.08), 0 0 24px rgba(99, 196, 255, 0.18);
+}
+
+.enigma-module.lamp.active strong {
+  color: #ffd075;
+}
+
+.bombe-status {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.bombe-status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #edf4ff;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bombe-machine {
+  min-height: 210px;
+  grid-template-columns: 1fr auto;
+  padding: 22px;
+}
+
+.bombe-drum {
+  min-height: 142px;
+  background: linear-gradient(180deg, rgba(43, 57, 74, 0.98), rgba(26, 34, 46, 0.98));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.bombe-drum span {
+  color: rgba(219, 230, 244, 0.72);
+}
+
+.bombe-drum strong {
+  color: #f6fbff;
+}
+
+.bombe-drum::after {
+  border-color: rgba(99, 196, 255, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.tm-machine {
+  min-height: 210px;
+  gap: 18px;
+  padding: 22px;
+}
+
+.tm-reel {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.92) 0 14px, rgba(24, 38, 58, 0.18) 15px 18px, rgba(99, 196, 255, 0.72) 19px 100%);
+}
+
+.tm-machine-slot {
+  background: rgba(31, 41, 56, 0.96);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.tm-head-arm {
+  background: linear-gradient(180deg, #ffd075, #c78726);
+}
+
+.tm-machine-cell {
+  background: rgba(245, 248, 252, 0.96);
+}
+
+.tm-state-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tm-state-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #edf4ff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+.tm-state-chip.active {
+  background: rgba(99, 196, 255, 0.18);
+  border-color: rgba(99, 196, 255, 0.36);
+}
+
+@media (max-width: 980px) {
+  .enigma-hardware {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bombe-machine {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .bombe-status,
+  .tm-state-chips {
+    flex-direction: column;
+  }
+
+  .enigma-hardware {
+    grid-template-columns: 1fr;
+  }
+
+  .wiki-image {
+    max-height: 260px;
+  }
+}

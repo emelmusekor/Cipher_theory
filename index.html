@@ -43,20 +43,11 @@
               <li>막대 둘레, 즉 열 수가 곧 키 역할을 합니다.</li>
               <li>표를 채우는 순서와 읽는 순서가 다르면 암호가 됩니다.</li>
             </ul>
-            <div class="machine-card">
-              <div class="machine-head">하드웨어 그림</div>
-              <div class="machine-figure scytale-machine">
-                <div class="scytale-rod"></div>
-                <div class="scytale-ribbon">
-                  <span id="scytale-band-1">CIPHER</span>
-                  <span id="scytale-band-2">STRIP</span>
-                  <span id="scytale-band-3">WRAPS</span>
-                  <span id="scytale-band-4">ROD</span>
-                </div>
-                <div class="scytale-pointer" id="scytale-pointer"></div>
-              </div>
-              <p id="scytale-machine-caption" class="machine-caption">가죽 띠를 막대에 감고 같은 줄에 적은 뒤, 펴면 읽는 순서가 달라집니다.</p>
-            </div>
+            <div class="wiki-figure">
+  <img src="assets/images/scytale-wikipedia.png" alt="막대에 띠를 감아 문자를 적은 스키테일 그림" class="wiki-image scytale-reference-image">
+  <p class="machine-caption">실제 스키테일은 막대에 띠를 감은 뒤 문자를 적고, 다시 펼쳤을 때 순서가 흐트러지는 구조였습니다.</p>
+  <p class="source-note"><a href="https://en.wikipedia.org/wiki/Scytale" target="_blank" rel="noreferrer">Wikipedia / Wikimedia Commons 출처</a></p>
+</div>
             <div class="concept-callout">
               <strong>미션:</strong> 열 수를 바꿔 보면서 같은 문장이 얼마나 다르게 보이는지 확인해 보세요.
             </div>
@@ -122,17 +113,11 @@
               <strong>수학적 방법</strong>
               <p>가능한 모든 이동값을 시험한 뒤 빈도 분포와 가장 비슷한 해를 고릅니다.</p>
             </div>
-            <div class="machine-card">
-              <div class="machine-head">하드웨어 그림</div>
-              <div class="machine-figure caesar-machine">
-                <div class="caesar-pointer"></div>
-                <div class="caesar-disk outer"><span>기준 원판 A-Z</span></div>
-                <div class="caesar-disk inner" id="caesar-disk-inner"><span id="caesar-disk-shift">+3</span></div>
-                <div class="caesar-window-tag">출력 창</div>
-                <div class="caesar-window-letter" id="caesar-disk-window">D</div>
-              </div>
-              <p id="caesar-machine-caption" class="machine-caption">안쪽 원판을 돌리면 같은 알파벳이 다른 위치에 놓여 새로운 치환표가 생깁니다.</p>
-            </div>
+            <div class="wiki-figure">
+  <img src="assets/images/caesar-wikipedia.svg" alt="시저 암호에서 알파벳이 세 칸 이동하는 그림" class="wiki-image">
+  <p class="machine-caption">시저 암호는 알파벳 줄 전체를 일정한 칸 수만큼 밀어 놓은 하나의 치환표라고 보면 됩니다.</p>
+  <p class="source-note"><a href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="noreferrer">Wikipedia / Wikimedia Commons 출처</a></p>
+</div>
             <div class="concept-callout">
               <strong>해 보기:</strong> 입력 문장을 바꾸면 휴리스틱 추정, 수학적 최적해, 상위 후보가 모두 즉시 바뀌는지 확인해 보세요.
             </div>
@@ -237,24 +222,11 @@
           <strong>암호문</strong>
         </div>
       </div>
-      <div class="machine-card">
-        <div class="machine-head">하드웨어 그림</div>
-        <div class="machine-figure vigenere-machine">
-          <div class="vigenere-wheel" id="vigenere-wheel-input">
-            <span>평문</span>
-            <strong id="vigenere-machine-input">C</strong>
-          </div>
-          <div class="vigenere-wheel key" id="vigenere-wheel-key">
-            <span>반복 키</span>
-            <strong id="vigenere-machine-key-display">T</strong>
-          </div>
-          <div class="vigenere-wheel output" id="vigenere-wheel-output">
-            <span>출력</span>
-            <strong id="vigenere-machine-output">V</strong>
-          </div>
-        </div>
-        <p id="vigenere-machine-caption" class="machine-caption">각 위치에서 가운데 키 원판이 다른 이동량을 만들기 때문에, 같은 글자도 위치마다 다르게 암호화됩니다.</p>
-      </div>
+      <div class="wiki-figure">
+  <img src="assets/images/vigenere-wikipedia.svg" alt="비제네르 사각표 그림" class="wiki-image vigenere-reference-image">
+  <p class="machine-caption">비제네르 암호는 이런 표에서 평문 행과 키 열을 만나게 해 각 칸마다 다른 치환을 만드는 방식으로 이해할 수 있습니다.</p>
+  <p class="source-note"><a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher" target="_blank" rel="noreferrer">Wikipedia / Wikimedia Commons 출처</a></p>
+</div>
       <div class="concept-callout">
         <strong>천천히 볼 점:</strong> 비제네르는 사실 "시저 암호 여러 개를 번갈아 쓰는 장치"처럼 생각하면 이해가 쉬워집니다.
         한 줄 전체가 아니라, 각 칸이 자기 키 글자만큼 따로 움직인다고 보면 됩니다.
@@ -340,8 +312,8 @@
           <p>오른쪽 로터가 돌기 때문에 같은 글자를 다시 입력해도 다른 결과가 나옵니다.</p>
         </div>
       </div>
-      <div class="machine-card machine-card-wide">
-        <div class="machine-head">하드웨어 그림</div>
+      <div class="machine-card machine-card-dark machine-card-wide">
+        <div class="machine-head">로터 경로 시각화</div>
         <div class="machine-figure enigma-hardware">
           <div class="enigma-module" id="enigma-hw-keyboard"><span>Keyboard</span><strong id="enigma-hw-input">A</strong></div>
           <div class="enigma-module" id="enigma-hw-plug"><span>Plugboard</span><strong>PLUG</strong></div>
@@ -477,8 +449,12 @@
           <p>이렇게 1차로 살아남은 정렬만 로터 위치와 배선 가능성을 더 자세히 확인합니다. 봄브의 힘은 "정답 찍기"보다 "불가능한 것 지우기"에 있었습니다.</p>
         </div>
       </div>
-      <div class="machine-card">
-        <div class="machine-head">하드웨어 그림</div>
+      <div class="machine-card machine-card-dark">
+        <div class="machine-head">해독 장치 시각화</div>
+        <div class="bombe-status">
+          <span class="bombe-status-chip" id="bombe-offset-label">offset --</span>
+          <span class="bombe-status-chip" id="bombe-status-label">대기</span>
+        </div>
         <div class="machine-figure bombe-machine" id="bombe-machine">
           <div class="bombe-bank">
             <div class="bombe-drum" id="bombe-drum-left"><span>Left</span><strong id="bombe-drum-left-label">I</strong></div>
@@ -605,8 +581,8 @@
           <p>봄브는 이런 종류의 규칙 검사를 엄청나게 많은 후보 설정에 대해 동시에 빠르게 수행했습니다. 여기서는 그 생각의 아주 작은 조각을 눈으로 보는 것입니다.</p>
         </div>
       </div>
-      <div class="machine-card">
-        <div class="machine-head">하드웨어 그림</div>
+      <div class="machine-card machine-card-dark">
+        <div class="machine-head">상태 기계 시각화</div>
         <div class="machine-figure tm-machine">
           <div class="tm-reel left"></div>
           <div class="tm-machine-slot">
@@ -616,6 +592,7 @@
           <div class="tm-reel right"></div>
         </div>
         <p id="tm-machine-caption" class="machine-caption">헤드는 한 칸을 읽고, 규칙표를 보고, 쓰고, 왼쪽이나 오른쪽으로 움직입니다.</p>
+        <div id="tm-state-chips" class="tm-state-chips"></div>
       </div>
       <div class="concept-callout warning">
         <strong>정리:</strong> "튜링 머신으로 애니그마를 직접 돌렸다"기보다,
@@ -753,6 +730,7 @@
   </div>
 </body>
 </html>
+
 
 
 

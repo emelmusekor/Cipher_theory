@@ -1098,14 +1098,12 @@ function animateScytale(sourceText, grid, outputText, mode) {
     renderBuildOutput("#scytale-build", [], -1);
     setText("#scytale-visual-caption", "영문자를 입력하면 시각화가 시작됩니다.");
     renderScytaleGrid(grid, "#scytale-grid");
-    updateScytaleHardware(grid, null, mode);
     return;
   }
   const buildChars = truncateArray(sequence.map((cell) => cell.char));
   runAnimationLoop("scytale", sequence, (step, index) => {
     renderScytaleGrid(grid, "#scytale-grid", step);
     renderBuildOutput("#scytale-build", buildChars, index);
-    updateScytaleHardware(grid, step, mode);
     setText(
       "#scytale-visual-caption",
       mode === "encode"
@@ -1126,7 +1124,6 @@ function animateCaesar(input, effectiveShift, reasonText) {
     renderAlphabetRail("#caesar-rail-shifted", []);
     renderPairStream("#caesar-pairs", []);
     setText("#caesar-visual-caption", "영문자를 입력하면 알파벳 이동이 보입니다.");
-    updateCaesarHardware(effectiveShift, input, caesarMode, null);
     return;
   }
   const topRail = alphabet.split("");
@@ -1136,7 +1133,6 @@ function animateCaesar(input, effectiveShift, reasonText) {
     renderAlphabetRail("#caesar-rail-plain", topRail, activeColumn);
     renderAlphabetRail("#caesar-rail-shifted", bottomRail, activeColumn);
     renderPairStream("#caesar-pairs", pairs, index);
-    updateCaesarHardware(effectiveShift, input, caesarMode, pair);
     const sign = effectiveShift >= 0 ? "+" : "";
     setText("#caesar-visual-caption", `${reasonText}: ${pair.input} -> ${pair.output} (shift ${sign}${effectiveShift})`);
   });
@@ -1151,7 +1147,6 @@ function animateVigenere(pairs, mode) {
     renderCellStrip("#vigenere-key-row", []);
     renderCellStrip("#vigenere-output-row", []);
     setText("#vigenere-visual-caption", "키워드와 영문 입력을 넣으면 반복 키가 움직입니다.");
-    updateVigenereHardware(null, mode);
     return;
   }
   const inputChars = frames.map((pair) => pair.input);
@@ -1161,7 +1156,6 @@ function animateVigenere(pairs, mode) {
     renderCellStrip("#vigenere-input-row", inputChars, index, index - 1);
     renderCellStrip("#vigenere-key-row", keyChars, index, index - 1);
     renderCellStrip("#vigenere-output-row", outputChars, index, index - 1);
-    updateVigenereHardware(pair, mode);
     const operator = mode === "encode" ? "+" : "-";
     setText("#vigenere-visual-caption", `${pair.input} ${operator} ${pair.key}(${pair.shift}) = ${pair.output}`);
   });
@@ -1231,67 +1225,6 @@ function animateBombe(result, order) {
   }, 980);
 }
 
-function setInlineStyle(target, property, value) {
-  const element = resolveTarget(target);
-  if (element) {
-    element.style.setProperty(property, value);
-  }
-}
-
-function toggleElementClass(target, className, enabled) {
-  const element = resolveTarget(target);
-  if (element) {
-    element.classList.toggle(className, Boolean(enabled));
-  }
-}
-
-function updateScytaleHardware(grid, step, mode) {
-  for (let index = 0; index < 4; index += 1) {
-    const rowText = (grid[index] || []).join("") || "·";
-    setText(`#scytale-band-${index + 1}`, rowText);
-  }
-  const totalColumns = Math.max(1, grid[0]?.length || 1);
-  const columnRatio = (step?.column || 0) / Math.max(totalColumns - 1, 1);
-  const rowIndex = Math.min(step?.row || 0, 3);
-  setInlineStyle("#scytale-pointer", "left", `${18 + columnRatio * 60}%`);
-  setInlineStyle("#scytale-pointer", "top", `${26 + rowIndex * 16}%`);
-  setText(
-    "#scytale-machine-caption",
-    mode === "encode"
-      ? `막대 둘레 ${totalColumns}칸에 띠를 감은 상태입니다. 세로로 읽기 시작하면 글자 순서가 바뀝니다.`
-      : `같은 둘레의 막대에 다시 감으면 흐트러진 글자들이 원래 줄 순서로 돌아옵니다.`
-  );
-}
-
-function updateCaesarHardware(effectiveShift, input, mode, pair) {
-  const normalized = mod(effectiveShift, 26);
-  const source = pair?.input || onlyLetters(input)[0] || "A";
-  const output = pair?.output || caesarShiftChar(source, effectiveShift);
-  setInlineStyle("#caesar-disk-inner", "transform", `translate(-50%, -50%) rotate(${(normalized / 26) * 360}deg)`);
-  setText("#caesar-disk-shift", `${effectiveShift >= 0 ? "+" : ""}${effectiveShift}`);
-  setText("#caesar-disk-window", output);
-  setText(
-    "#caesar-machine-caption",
-    `${mode === "encode" ? "안쪽 원판을 앞으로 돌리면" : "원판을 거꾸로 맞추면"} ${source}가 창에서 ${output}(으)로 대응됩니다.`
-  );
-}
-
-function updateVigenereHardware(pair, mode) {
-  const current = pair || { input: "A", key: "A", output: "A", shift: 0 };
-  setText("#vigenere-machine-input", current.input);
-  setText("#vigenere-machine-key-display", current.key);
-  setText("#vigenere-machine-output", current.output);
-  setInlineStyle("#vigenere-wheel-input", "transform", `rotate(${charToIndex(current.input) * 6}deg)`);
-  setInlineStyle("#vigenere-wheel-key", "transform", `rotate(${charToIndex(current.key) * 8}deg)`);
-  setInlineStyle("#vigenere-wheel-output", "transform", `rotate(${charToIndex(current.output) * 6}deg)`);
-  setText(
-    "#vigenere-machine-caption",
-    pair
-      ? `${current.input} ${mode === "encode" ? "+" : "-"} ${current.key}(${current.shift}) = ${current.output}. 가운데 키 원판이 이 칸의 이동량을 만듭니다.`
-      : "입력과 키를 넣으면 세 개의 원판이 각 위치의 변환을 보여 줍니다."
-  );
-}
-
 function clearEnigmaHardware() {
   ["#enigma-hw-keyboard", "#enigma-hw-plug", "#enigma-hw-right", "#enigma-hw-middle", "#enigma-hw-left", "#enigma-hw-reflector", "#enigma-hw-lamp"].forEach((target) => {
     toggleElementClass(target, "active", false);
@@ -1331,6 +1264,17 @@ function updateBombeHardware(result, order, focus) {
   const badOn = focus ? focus.status === "impossible" : result.alignments?.some((item) => item.status === "impossible");
   toggleElementClass("#bombe-lamp-good", "active", goodOn);
   toggleElementClass("#bombe-lamp-bad", "active", badOn);
+  setText("#bombe-offset-label", focus ? `offset ${focus.offset}` : "offset --");
+  setText(
+    "#bombe-status-label",
+    focus
+      ? focus.status === "impossible"
+        ? "REJECT"
+        : focus.status === "candidate"
+          ? "CHECK"
+          : "SCAN"
+      : "대기"
+  );
   setText(
     "#bombe-machine-caption",
     focus
@@ -1353,6 +1297,17 @@ function updateTmHardware() {
     cell.className = `tm-machine-cell ${offset === 0 ? "active" : ""}`.trim();
     cell.innerHTML = `<small>${index}</small><span>${tmRead(index)}</span>`;
     track.appendChild(cell);
+  }
+  const chipTarget = resolveTarget("#tm-state-chips");
+  if (chipTarget) {
+    chipTarget.innerHTML = "";
+    const states = [...new Set([...Object.keys(currentTmPreset().transitions), currentTmPreset().accept])];
+    states.forEach((state) => {
+      const chip = document.createElement("div");
+      chip.className = `tm-state-chip ${state === tmState.state ? "active" : ""}`.trim();
+      chip.textContent = state;
+      chipTarget.appendChild(chip);
+    });
   }
   setText("#tm-machine-caption", `헤드는 ${tmState.head}칸에서 ${tmRead(tmState.head)}를 읽고, 상태 ${tmState.state}에 따라 다음 행동을 고릅니다.`);
 }
@@ -1707,6 +1662,9 @@ window.advanceTime = (milliseconds = 1000) => {
 };
 
 document.addEventListener("DOMContentLoaded", initialize);
+
+
+
 
 
 
