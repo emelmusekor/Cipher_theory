@@ -1244,6 +1244,13 @@ function updateEnigmaHardware(frame, settings, fallbackWindows) {
   setText("#enigma-hw-right-window", windows[2] || "A");
   setText("#enigma-hw-input", frame?.input || onlyLetters(document.querySelector("#enigma-input").value)[0] || "A");
   setText("#enigma-hw-output", frame?.output || "-");
+  [["#enigma-hw-left", windows[0]], ["#enigma-hw-middle", windows[1]], ["#enigma-hw-right", windows[2]]].forEach(([target, char], index) => {
+    const rotor = resolveTarget(target);
+    if (rotor) {
+      rotor.style.setProperty("--rotor-angle", `${charToIndex(char || "A") * 13.846}deg`);
+      rotor.style.setProperty("--rotor-delay", `${index * 80}ms`);
+    }
+  });
   clearEnigmaHardware();
   if (frame) {
     ["#enigma-hw-keyboard", "#enigma-hw-plug", "#enigma-hw-right", "#enigma-hw-middle", "#enigma-hw-left", "#enigma-hw-reflector", "#enigma-hw-lamp"].forEach((target) => {
@@ -1266,6 +1273,12 @@ function updateBombeHardware(result, order, focus) {
   const badOn = focus ? focus.status === "impossible" : result.alignments?.some((item) => item.status === "impossible");
   toggleElementClass("#bombe-lamp-good", "active", goodOn);
   toggleElementClass("#bombe-lamp-bad", "active", badOn);
+  ["#bombe-drum-left", "#bombe-drum-middle", "#bombe-drum-right"].forEach((target, index) => {
+    const drum = resolveTarget(target);
+    if (drum) {
+      drum.style.setProperty("--drum-angle", `${(focus?.offset ?? 0) * (index + 1) * 24}deg`);
+    }
+  });
   setText("#bombe-offset-label", focus ? `offset ${focus.offset}` : "offset --");
   setText(
     "#bombe-status-label",
@@ -1301,6 +1314,7 @@ function updateTmHardware() {
     track.appendChild(cell);
   }
   const chipTarget = resolveTarget("#tm-state-chips");
+  const slot = document.querySelector(".tm-machine-slot");
   if (chipTarget) {
     chipTarget.innerHTML = "";
     const states = [...new Set([...Object.keys(currentTmPreset().transitions), currentTmPreset().accept])];
@@ -1311,6 +1325,13 @@ function updateTmHardware() {
       chipTarget.appendChild(chip);
     });
   }
+  if (slot) {
+    slot.style.setProperty("--head-bob", tmState.steps % 2 === 0 ? "0px" : "-6px");
+    slot.style.setProperty("--track-shift", `${((tmState.steps % 3) - 1) * 6}px`);
+  }
+  document.querySelectorAll(".tm-reel").forEach((reel, index) => {
+    reel.style.setProperty("--reel-angle", `${tmState.steps * (index === 0 ? 18 : -18)}deg`);
+  });
   setText("#tm-machine-caption", `헤드는 ${tmState.head}칸에서 ${tmRead(tmState.head)}를 읽고, 상태 ${tmState.state}에 따라 다음 행동을 고릅니다.`);
 }
 
@@ -1489,6 +1510,46 @@ function updateBombe() {
   animateBombe(result, order);
 }
 
+function openVisualModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (!modal) {
+    return;
+  }
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+}
+
+function closeVisualModal(target) {
+  const modal = target.closest(".visual-modal");
+  if (!modal) {
+    return;
+  }
+  modal.hidden = true;
+  if (![...document.querySelectorAll(".visual-modal")].some((item) => !item.hidden)) {
+    document.body.classList.remove("modal-open");
+  }
+}
+
+function attachModalEvents() {
+  document.querySelectorAll("[data-open-modal]").forEach((button) => {
+    button.addEventListener("click", () => openVisualModal(button.dataset.openModal));
+  });
+  document.querySelectorAll("[data-close-modal]").forEach((button) => {
+    button.addEventListener("click", () => closeVisualModal(button));
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") {
+      return;
+    }
+    document.querySelectorAll(".visual-modal").forEach((modal) => {
+      if (!modal.hidden) {
+        modal.hidden = true;
+      }
+    });
+    document.body.classList.remove("modal-open");
+  });
+}
+
 function attachEvents() {
   document.querySelector("#scytale-encode").addEventListener("click", () => updateScytale("encode"));
   document.querySelector("#scytale-decode").addEventListener("click", () => updateScytale("decode"));
@@ -1628,6 +1689,7 @@ function initialize() {
   loadTmPreset("selfMapCheck", tmPresets.selfMapCheck.tape);
   resetVnState(vnPresets.sum.code);
   attachEvents();
+  attachModalEvents();
   updateScytale("encode");
   updateCaesarTransform("decode");
   updateCaesarAnalysis();

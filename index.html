@@ -284,7 +284,7 @@
       키를 한 번 누를 때마다 오른쪽 로터가 한 칸 돌고, 전류가 지나는 배선 위치가 달라져서 같은 글자도 다음 순간에는 다른 글자로 바뀝니다.
     </p>
   </div>
-  <div class="lab-grid enigma-grid">
+  <div class="lab-grid enigma-grid focus-grid">
     <article class="panel theory-panel">
       <h3>기계 구조를 먼저 보기</h3>
       <div class="component-strip vertical-strip">
@@ -312,18 +312,10 @@
           <p>오른쪽 로터가 돌기 때문에 같은 글자를 다시 입력해도 다른 결과가 나옵니다.</p>
         </div>
       </div>
-      <div class="machine-card machine-card-dark machine-card-wide">
-        <div class="machine-head">로터 경로 시각화</div>
-        <div class="machine-figure enigma-hardware">
-          <div class="enigma-module" id="enigma-hw-keyboard"><span>Keyboard</span><strong id="enigma-hw-input">A</strong></div>
-          <div class="enigma-module" id="enigma-hw-plug"><span>Plugboard</span><strong>PLUG</strong></div>
-          <div class="enigma-module rotor" id="enigma-hw-right"><span>Right Rotor</span><strong id="enigma-hw-right-label">III</strong><em id="enigma-hw-right-window">A</em></div>
-          <div class="enigma-module rotor" id="enigma-hw-middle"><span>Middle Rotor</span><strong id="enigma-hw-middle-label">II</strong><em id="enigma-hw-middle-window">A</em></div>
-          <div class="enigma-module rotor" id="enigma-hw-left"><span>Left Rotor</span><strong id="enigma-hw-left-label">I</strong><em id="enigma-hw-left-window">A</em></div>
-          <div class="enigma-module" id="enigma-hw-reflector"><span>Reflector</span><strong>REF</strong></div>
-          <div class="enigma-module lamp" id="enigma-hw-lamp"><span>Lampboard</span><strong id="enigma-hw-output">G</strong></div>
-        </div>
-        <p id="enigma-machine-caption" class="machine-caption">키가 눌리면 전류가 플러그보드와 로터를 지나 반사판을 거쳐 다시 돌아옵니다.</p>
+      <div class="popup-cta-block">
+        <h3>장치 시각화는 크게 보기</h3>
+        <p class="helper-text">실습은 오른쪽 시뮬레이터에서 진행하고, 로터의 회전과 전류 경로는 팝업에서 크게 관찰하세요.</p>
+        <button class="button secondary visual-open" type="button" data-open-modal="modal-enigma">애니그마 시각화 열기</button>
       </div>
       <div class="concept-callout warning">
         <strong>중요:</strong> 실제 애니그마 해독에 쓰인 것은 추상적 튜링 머신 자체가 아니라,
@@ -390,25 +382,8 @@
         <span class="rotor-chip" id="enigma-window-middle">A</span>
         <span class="rotor-chip" id="enigma-window-right">A</span>
       </div>
-      <div class="visual-block enigma-visual-block">
-        <div class="visual-head">
-          <h3>한 글자 경로 시각화</h3>
-          <p id="enigma-visual-caption" class="helper-text"></p>
-        </div>
-        <div class="mini-stage">
-          <span class="stage-label">앞부분 글자 흐름</span>
-          <div id="enigma-letter-film" class="pair-stream"></div>
-        </div>
-        <div class="path-grid">
-          <div class="path-node"><span>입력</span><strong id="enigma-path-input">-</strong></div>
-          <div class="path-node"><span>플러그보드</span><strong id="enigma-path-plug">-</strong></div>
-          <div class="path-node"><span>오른쪽 로터</span><strong id="enigma-path-right">-</strong></div>
-          <div class="path-node"><span>가운데 로터</span><strong id="enigma-path-middle">-</strong></div>
-          <div class="path-node"><span>왼쪽 로터</span><strong id="enigma-path-left">-</strong></div>
-          <div class="path-node"><span>반사판</span><strong id="enigma-path-reflector">-</strong></div>
-          <div class="path-node"><span>되돌아옴</span><strong id="enigma-path-back">-</strong></div>
-          <div class="path-node"><span>출력</span><strong id="enigma-path-output">-</strong></div>
-        </div>
+      <div class="popup-cta-inline">
+        <button class="button ghost visual-open" type="button" data-open-modal="modal-enigma">한 글자 경로 크게 보기</button>
       </div>
       <div class="result-block">
         <h3>앞 12글자 추적</h3>
@@ -428,7 +403,7 @@
       그래서 먼저 사람이 "이 위치엔 아마 이런 단어가 있었을 것"이라고 가설을 세우고, 봄브가 그 가설과 맞지 않는 설정을 대량으로 탈락시켰습니다.
     </p>
   </div>
-  <div class="lab-grid">
+  <div class="lab-grid focus-grid">
     <article class="panel theory-panel">
       <h3>봄브를 이해하는 순서</h3>
       <div class="detail-stack">
@@ -449,24 +424,10 @@
           <p>이렇게 1차로 살아남은 정렬만 로터 위치와 배선 가능성을 더 자세히 확인합니다. 봄브의 힘은 "정답 찍기"보다 "불가능한 것 지우기"에 있었습니다.</p>
         </div>
       </div>
-      <div class="machine-card machine-card-dark">
-        <div class="machine-head">해독 장치 시각화</div>
-        <div class="bombe-status">
-          <span class="bombe-status-chip" id="bombe-offset-label">offset --</span>
-          <span class="bombe-status-chip" id="bombe-status-label">대기</span>
-        </div>
-        <div class="machine-figure bombe-machine" id="bombe-machine">
-          <div class="bombe-bank">
-            <div class="bombe-drum" id="bombe-drum-left"><span>Left</span><strong id="bombe-drum-left-label">I</strong></div>
-            <div class="bombe-drum" id="bombe-drum-middle"><span>Middle</span><strong id="bombe-drum-middle-label">II</strong></div>
-            <div class="bombe-drum" id="bombe-drum-right"><span>Right</span><strong id="bombe-drum-right-label">III</strong></div>
-          </div>
-          <div class="bombe-lamps">
-            <div class="bombe-lamp good" id="bombe-lamp-good"></div>
-            <div class="bombe-lamp bad" id="bombe-lamp-bad"></div>
-          </div>
-        </div>
-        <p id="bombe-machine-caption" class="machine-caption">회전 드럼이 가능한 설정을 빠르게 훑고, 모순이 보이면 즉시 탈락시킵니다.</p>
+      <div class="popup-cta-block">
+        <h3>장치 시각화는 크게 보기</h3>
+        <p class="helper-text">크립 정렬 실험은 오른쪽에서 하고, 실제 드럼이 어떻게 회전하며 후보를 걸러 내는지는 팝업에서 크게 확인하세요.</p>
+        <button class="button secondary visual-open" type="button" data-open-modal="modal-bombe">봄브 시각화 열기</button>
       </div>
       <div class="concept-callout warning">
         <strong>중요:</strong> 봄브는 추상적인 수학 공식 한 줄이 아니라, 회전 드럼과 전기 회로로 가능한 설정을 매우 빠르게 검사하는 전기-기계식 해독 장치였습니다.
@@ -511,19 +472,8 @@
         <button id="bombe-run" class="button primary" type="button">탐색 실행</button>
         <button id="bombe-example" class="button ghost" type="button">예시 불러오기</button>
       </div>
-      <div class="visual-block">
-        <div class="visual-head">
-          <h3>정렬 시각화</h3>
-          <p id="bombe-visual-caption" class="helper-text"></p>
-        </div>
-        <div class="mini-stage">
-          <span class="stage-label">암호문</span>
-          <div id="bombe-cipher-track" class="cell-strip wide"></div>
-        </div>
-        <div class="mini-stage">
-          <span class="stage-label">크립</span>
-          <div id="bombe-crib-track" class="cell-strip wide"></div>
-        </div>
+      <div class="popup-cta-inline">
+        <button class="button ghost visual-open" type="button" data-open-modal="modal-bombe">정렬 과정 크게 보기</button>
       </div>
       <div class="insight-grid">
         <article class="insight-card">
@@ -556,7 +506,7 @@
       아래에서는 애니그마 해독의 중요한 규칙 하나를 아주 작은 튜링 머신 절차로 체험합니다.
     </p>
   </div>
-  <div class="lab-grid">
+  <div class="lab-grid focus-grid">
     <article class="panel theory-panel">
       <h3>이 체험을 어떻게 보면 좋을까?</h3>
       <div class="detail-stack">
@@ -581,18 +531,10 @@
           <p>봄브는 이런 종류의 규칙 검사를 엄청나게 많은 후보 설정에 대해 동시에 빠르게 수행했습니다. 여기서는 그 생각의 아주 작은 조각을 눈으로 보는 것입니다.</p>
         </div>
       </div>
-      <div class="machine-card machine-card-dark">
-        <div class="machine-head">상태 기계 시각화</div>
-        <div class="machine-figure tm-machine">
-          <div class="tm-reel left"></div>
-          <div class="tm-machine-slot">
-            <div class="tm-head-arm"></div>
-            <div class="tm-machine-track" id="tm-machine-track"></div>
-          </div>
-          <div class="tm-reel right"></div>
-        </div>
-        <p id="tm-machine-caption" class="machine-caption">헤드는 한 칸을 읽고, 규칙표를 보고, 쓰고, 왼쪽이나 오른쪽으로 움직입니다.</p>
-        <div id="tm-state-chips" class="tm-state-chips"></div>
+      <div class="popup-cta-block">
+        <h3>장치 시각화는 크게 보기</h3>
+        <p class="helper-text">단계 실행은 오른쪽에서 하고, 헤드 이동과 상태 변화는 팝업에서 크게 보며 따라가세요.</p>
+        <button class="button secondary visual-open" type="button" data-open-modal="modal-tm">튜링 머신 시각화 열기</button>
       </div>
       <div class="concept-callout warning">
         <strong>정리:</strong> "튜링 머신으로 애니그마를 직접 돌렸다"기보다,
@@ -617,6 +559,9 @@
         <button id="tm-step" class="button primary" type="button">한 단계</button>
         <button id="tm-burst" class="button ghost" type="button">10단계 실행</button>
         <button id="tm-reset" class="button ghost" type="button">리셋</button>
+      </div>
+      <div class="popup-cta-inline">
+        <button class="button ghost visual-open" type="button" data-open-modal="modal-tm">헤드와 테이프 크게 보기</button>
       </div>
       <div class="status-row">
         <div class="status-pill">상태 <strong id="tm-state">scan</strong></div>
@@ -727,6 +672,117 @@
   </div>
 </section>
     </main>
+  </div>
+  <div class="visual-modal" id="modal-enigma" hidden>
+    <div class="visual-modal-backdrop" data-close-modal></div>
+    <div class="visual-modal-dialog">
+      <button class="visual-modal-close" type="button" data-close-modal>닫기</button>
+      <div class="visual-modal-header">
+        <h2>애니그마 시각화</h2>
+        <p>로터와 전류 경로를 크게 보며 한 글자가 어떻게 바뀌는지 관찰합니다.</p>
+      </div>
+      <div class="machine-card machine-card-dark machine-card-wide modal-machine-card">
+        <div class="machine-head">로터 경로 시각화</div>
+        <div class="machine-figure enigma-hardware">
+          <div class="enigma-module" id="enigma-hw-keyboard"><span>Keyboard</span><strong id="enigma-hw-input">A</strong></div>
+          <div class="enigma-module" id="enigma-hw-plug"><span>Plugboard</span><strong>PLUG</strong></div>
+          <div class="enigma-module rotor" id="enigma-hw-right"><span>Right Rotor</span><strong id="enigma-hw-right-label">III</strong><em id="enigma-hw-right-window">A</em></div>
+          <div class="enigma-module rotor" id="enigma-hw-middle"><span>Middle Rotor</span><strong id="enigma-hw-middle-label">II</strong><em id="enigma-hw-middle-window">A</em></div>
+          <div class="enigma-module rotor" id="enigma-hw-left"><span>Left Rotor</span><strong id="enigma-hw-left-label">I</strong><em id="enigma-hw-left-window">A</em></div>
+          <div class="enigma-module" id="enigma-hw-reflector"><span>Reflector</span><strong>REF</strong></div>
+          <div class="enigma-module lamp" id="enigma-hw-lamp"><span>Lampboard</span><strong id="enigma-hw-output">G</strong></div>
+        </div>
+        <p id="enigma-machine-caption" class="machine-caption">키가 눌리면 전류가 플러그보드와 로터를 지나 반사판을 거쳐 다시 돌아옵니다.</p>
+      </div>
+      <div class="visual-block enigma-visual-block modal-visual-block">
+        <div class="visual-head">
+          <h3>한 글자 경로 시각화</h3>
+          <p id="enigma-visual-caption" class="helper-text"></p>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">앞부분 글자 흐름</span>
+          <div id="enigma-letter-film" class="pair-stream"></div>
+        </div>
+        <div class="path-grid">
+          <div class="path-node"><span>입력</span><strong id="enigma-path-input">-</strong></div>
+          <div class="path-node"><span>플러그보드</span><strong id="enigma-path-plug">-</strong></div>
+          <div class="path-node"><span>오른쪽 로터</span><strong id="enigma-path-right">-</strong></div>
+          <div class="path-node"><span>가운데 로터</span><strong id="enigma-path-middle">-</strong></div>
+          <div class="path-node"><span>왼쪽 로터</span><strong id="enigma-path-left">-</strong></div>
+          <div class="path-node"><span>반사판</span><strong id="enigma-path-reflector">-</strong></div>
+          <div class="path-node"><span>되돌아옴</span><strong id="enigma-path-back">-</strong></div>
+          <div class="path-node"><span>출력</span><strong id="enigma-path-output">-</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="visual-modal" id="modal-bombe" hidden>
+    <div class="visual-modal-backdrop" data-close-modal></div>
+    <div class="visual-modal-dialog">
+      <button class="visual-modal-close" type="button" data-close-modal>닫기</button>
+      <div class="visual-modal-header">
+        <h2>봄브 시각화</h2>
+        <p>회전 드럼과 정렬 과정을 크게 보며 어떤 후보가 즉시 탈락하는지 확인합니다.</p>
+      </div>
+      <div class="machine-card machine-card-dark modal-machine-card">
+        <div class="machine-head">해독 장치 시각화</div>
+        <div class="bombe-status">
+          <span class="bombe-status-chip" id="bombe-offset-label">offset --</span>
+          <span class="bombe-status-chip" id="bombe-status-label">대기</span>
+        </div>
+        <div class="machine-figure bombe-machine" id="bombe-machine">
+          <div class="bombe-bank">
+            <div class="bombe-drum" id="bombe-drum-left"><span>Left</span><strong id="bombe-drum-left-label">I</strong></div>
+            <div class="bombe-drum" id="bombe-drum-middle"><span>Middle</span><strong id="bombe-drum-middle-label">II</strong></div>
+            <div class="bombe-drum" id="bombe-drum-right"><span>Right</span><strong id="bombe-drum-right-label">III</strong></div>
+          </div>
+          <div class="bombe-lamps">
+            <div class="bombe-lamp good" id="bombe-lamp-good"></div>
+            <div class="bombe-lamp bad" id="bombe-lamp-bad"></div>
+          </div>
+        </div>
+        <p id="bombe-machine-caption" class="machine-caption">회전 드럼이 가능한 설정을 빠르게 훑고, 모순이 보이면 즉시 탈락시킵니다.</p>
+      </div>
+      <div class="visual-block modal-visual-block">
+        <div class="visual-head">
+          <h3>정렬 시각화</h3>
+          <p id="bombe-visual-caption" class="helper-text"></p>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">암호문</span>
+          <div id="bombe-cipher-track" class="cell-strip wide"></div>
+        </div>
+        <div class="mini-stage">
+          <span class="stage-label">크립</span>
+          <div id="bombe-crib-track" class="cell-strip wide"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="visual-modal" id="modal-tm" hidden>
+    <div class="visual-modal-backdrop" data-close-modal></div>
+    <div class="visual-modal-dialog">
+      <button class="visual-modal-close" type="button" data-close-modal>닫기</button>
+      <div class="visual-modal-header">
+        <h2>튜링 머신 시각화</h2>
+        <p>헤드, 테이프, 상태 변화가 어떻게 함께 움직이는지 크게 보며 단계별로 따라갑니다.</p>
+      </div>
+      <div class="machine-card machine-card-dark modal-machine-card">
+        <div class="machine-head">상태 기계 시각화</div>
+        <div class="machine-figure tm-machine">
+          <div class="tm-reel left"></div>
+          <div class="tm-machine-slot">
+            <div class="tm-head-arm"></div>
+            <div class="tm-machine-track" id="tm-machine-track"></div>
+          </div>
+          <div class="tm-reel right"></div>
+        </div>
+        <p id="tm-machine-caption" class="machine-caption">헤드는 한 칸을 읽고, 규칙표를 보고, 쓰고, 왼쪽이나 오른쪽으로 움직입니다.</p>
+        <div id="tm-state-chips" class="tm-state-chips"></div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
