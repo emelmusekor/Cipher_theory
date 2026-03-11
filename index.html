@@ -752,6 +752,16 @@
           <div class="path-node"><span>출력</span><strong id="enigma-path-output">-</strong></div>
         </div>
       </div>
+      <div class="result-block machine-step-block">
+        <h3>한 글자 슬로모션</h3>
+        <div class="step-explainer enigma-step-explainer">
+          <article class="step-card" id="enigma-step-card-1"><span>1. 입력</span><strong id="enigma-step-1-value">-</strong><p id="enigma-step-1-text">키보드에서 들어온 글자</p></article>
+          <article class="step-card" id="enigma-step-card-2"><span>2. 플러그보드</span><strong id="enigma-step-2-value">-</strong><p id="enigma-step-2-text">서로 바꾸기로 약속한 글자가 있으면 먼저 교환</p></article>
+          <article class="step-card" id="enigma-step-card-3"><span>3. 세 로터 통과</span><strong id="enigma-step-3-value">-</strong><p id="enigma-step-3-text">오른쪽, 가운데, 왼쪽 로터를 지나며 계속 변함</p></article>
+          <article class="step-card" id="enigma-step-card-4"><span>4. 반사판과 되돌아옴</span><strong id="enigma-step-4-value">-</strong><p id="enigma-step-4-text">반사판이 방향을 바꾸고 다시 로터를 거쳐 돌아옴</p></article>
+          <article class="step-card" id="enigma-step-card-5"><span>5. 램프 출력</span><strong id="enigma-step-5-value">-</strong><p id="enigma-step-5-text">마지막에 켜지는 램프 글자</p></article>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -796,6 +806,15 @@
           <div id="bombe-crib-track" class="cell-strip wide"></div>
         </div>
       </div>
+      <div class="result-block machine-step-block">
+        <h3>지금 봄브가 하는 일</h3>
+        <div class="step-explainer bombe-step-explainer">
+          <article class="step-card" id="bombe-step-card-1"><span>1. 가설</span><strong id="bombe-step-1-value">WORLD</strong><p id="bombe-step-1-text">원문 어딘가에 이 단어가 있었을 것이라고 추정</p></article>
+          <article class="step-card" id="bombe-step-card-2"><span>2. 줄맞춤</span><strong id="bombe-step-2-value">offset --</strong><p id="bombe-step-2-text">크립을 몇 칸 옮겨 암호문과 겹치는지 확인</p></article>
+          <article class="step-card" id="bombe-step-card-3"><span>3. 모순 검사</span><strong id="bombe-step-3-value">CHECK</strong><p id="bombe-step-3-text">같은 글자가 같은 칸에서 만나면 즉시 탈락</p></article>
+          <article class="step-card" id="bombe-step-card-4"><span>4. 판단</span><strong id="bombe-step-4-value">-</strong><p id="bombe-step-4-text">빨간색은 탈락, 초록색은 아직 탈락하지 않음</p></article>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -819,6 +838,15 @@
         </div>
         <p id="tm-machine-caption" class="machine-caption">헤드는 한 칸을 읽고, 규칙표를 보고, 쓰고, 왼쪽이나 오른쪽으로 움직입니다.</p>
         <div id="tm-state-chips" class="tm-state-chips"></div>
+      </div>
+      <div class="result-block machine-step-block">
+        <h3>지금 튜링 머신이 하는 일</h3>
+        <div class="step-explainer tm-step-explainer">
+          <article class="step-card" id="tm-step-card-1"><span>1. 읽기</span><strong id="tm-step-1-value">-</strong><p id="tm-step-1-text">헤드가 현재 칸의 기호를 읽습니다.</p></article>
+          <article class="step-card" id="tm-step-card-2"><span>2. 규칙 선택</span><strong id="tm-step-2-value">-</strong><p id="tm-step-2-text">현재 상태와 읽은 기호에 맞는 규칙 한 줄을 고릅니다.</p></article>
+          <article class="step-card" id="tm-step-card-3"><span>3. 쓰기 / 이동</span><strong id="tm-step-3-value">-</strong><p id="tm-step-3-text">필요하면 기호를 바꾸고, 왼쪽이나 오른쪽으로 움직입니다.</p></article>
+          <article class="step-card" id="tm-step-card-4"><span>4. 상태 변경</span><strong id="tm-step-4-value">-</strong><p id="tm-step-4-text">다음 상태로 넘어가며 같은 과정을 반복합니다.</p></article>
+        </div>
       </div>
     </div>
   </div>

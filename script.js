@@ -132,6 +132,7 @@ const tmState = {
   steps: 0,
   halted: false,
   log: "",
+  lastAction: null,
   initialTape: "A#A",
 };
 
@@ -200,6 +201,78 @@ function summarizePlugboard(text) {
 
 function summarizeEnigmaSettings(settings) {
   return `로터 ${settings.order.join("-")}는 서로 다른 배선판 3개를 이 순서로 꽂았다는 뜻입니다. 창 ${settings.positions.join("")}는 세 로터의 출발 각도이고, 플러그보드 ${summarizePlugboard(settings.plugboard)}는 로터에 들어가기 전에 먼저 서로 바꿔 주는 글자 쌍입니다.`;
+}
+
+function setStepCardActive(prefix, activeIndex, total) {
+  for (let index = 1; index <= total; index += 1) {
+    toggleElementClass(`#${prefix}-card-${index}`, "active", index === activeIndex);
+  }
+}
+
+function renderEnigmaSteps(frame, settings) {
+  if (!frame || !frame.path) {
+    setText("#enigma-step-1-value", onlyLetters(document.querySelector("#enigma-input").value)[0] || "-");
+    setText("#enigma-step-2-value", summarizePlugboard(settings.plugboard));
+    setText("#enigma-step-3-value", settings.order.join(" -> "));
+    setText("#enigma-step-4-value", "REF");
+    setText("#enigma-step-5-value", "-");
+    setText("#enigma-step-1-text", "키보드에서 첫 글자가 들어오기를 기다립니다.");
+    setText("#enigma-step-2-text", "플러그보드가 있으면 여기서 먼저 글자를 바꿉니다.");
+    setText("#enigma-step-3-text", "오른쪽 로터부터 왼쪽 로터까지 차례로 통과합니다.");
+    setText("#enigma-step-4-text", "반사판에서 방향을 바꾸고 다시 되돌아옵니다.");
+    setText("#enigma-step-5-text", "마지막에 램프판에서 출력 글자가 켜집니다.");
+    setStepCardActive("enigma-step", 1, 5);
+    return;
+  }
+  const swapped = frame.path.input !== frame.path.plug;
+  setText("#enigma-step-1-value", frame.path.input);
+  setText("#enigma-step-2-value", frame.path.plug);
+  setText("#enigma-step-3-value", `${frame.path.right} -> ${frame.path.middle} -> ${frame.path.left}`);
+  setText("#enigma-step-4-value", `${frame.path.reflector} -> ${frame.path.back}`);
+  setText("#enigma-step-5-value", frame.path.output);
+  setText("#enigma-step-1-text", `${frame.before} 창 위치에서 ${frame.input} 키를 눌렀습니다.`);
+  setText("#enigma-step-2-text", swapped ? `${frame.path.input}가 플러그보드에서 ${frame.path.plug}(으)로 바뀌었습니다.` : `${frame.path.input}는 플러그보드에서 바뀌지 않았습니다.`);
+  setText("#enigma-step-3-text", `오른쪽, 가운데, 왼쪽 로터를 지나며 ${frame.path.right}, ${frame.path.middle}, ${frame.path.left}(으)로 계속 변했습니다.`);
+  setText("#enigma-step-4-text", `반사판에서 ${frame.path.reflector}(으)로 바뀐 뒤 되돌아오며 ${frame.path.back}가 되었습니다.`);
+  setText("#enigma-step-5-text", `마지막에 ${frame.path.output} 램프가 켜지고, 다음 창 위치는 ${frame.after}입니다.`);
+  setStepCardActive("enigma-step", 5, 5);
+}
+
+function renderBombeSteps(result, focus) {
+  setText("#bombe-step-1-value", result.cleanCrib || "-");
+  setText("#bombe-step-2-value", focus ? `offset ${focus.offset}` : "offset --");
+  setText("#bombe-step-3-value", focus ? (focus.status === "impossible" ? "모순 발견" : "모순 없음") : "대기");
+  setText("#bombe-step-4-value", focus ? (focus.status === "impossible" ? "REJECT" : focus.status === "candidate" ? "KEEP" : "SCAN") : "-");
+  setText("#bombe-step-1-text", result.cleanCrib ? `원문 어딘가에 ${result.cleanCrib}가 있었을 것이라고 가정합니다.` : "먼저 추정 단어를 입력합니다.");
+  setText("#bombe-step-2-text", focus ? `${result.cleanCrib}를 암호문과 ${focus.offset}칸 어긋나게 겹쳐 보고 있습니다.` : "크립을 한 칸씩 옮겨 겹쳐 봅니다.");
+  setText("#bombe-step-3-text", focus ? (focus.status === "impossible" ? `${focus.segment}와 ${result.cleanCrib}를 겹쳤더니 같은 글자 금지 규칙에 어긋났습니다.` : `${focus.segment}와 ${result.cleanCrib}를 겹쳤지만 아직 즉시 모순은 보이지 않습니다.`) : "같은 글자가 같은 칸에서 만나면 즉시 탈락입니다.");
+  setText("#bombe-step-4-text", focus ? (focus.status === "impossible" ? "이 정렬은 버립니다." : "이 정렬은 아직 살아남아 더 검사할 가치가 있습니다.") : "판정 결과가 여기에 표시됩니다.");
+  setStepCardActive("bombe-step", focus ? 4 : 1, 4);
+}
+
+function renderTmSteps() {
+  const action = tmState.lastAction;
+  if (!action) {
+    setText("#tm-step-1-value", tmRead(tmState.head));
+    setText("#tm-step-2-value", tmState.state);
+    setText("#tm-step-3-value", "대기");
+    setText("#tm-step-4-value", tmState.state);
+    setText("#tm-step-1-text", "헤드가 현재 칸의 기호를 읽을 준비를 합니다.");
+    setText("#tm-step-2-text", "현재 상태와 읽은 기호에 맞는 규칙을 찾습니다.");
+    setText("#tm-step-3-text", "규칙이 정해지면 쓰기와 이동을 수행합니다.");
+    setText("#tm-step-4-text", "다음 상태로 넘어가며 같은 과정을 반복합니다.");
+    setStepCardActive("tm-step", 1, 4);
+    return;
+  }
+  setText("#tm-step-1-value", action.read);
+  setText("#tm-step-2-value", `${action.stateBefore} + ${action.read}`);
+  setText("#tm-step-3-value", `${action.write} / ${action.move}`);
+  setText("#tm-step-4-value", action.next);
+  setText("#tm-step-1-text", `${action.headBefore}번 칸에서 ${action.read}를 읽었습니다.`);
+  setText("#tm-step-2-text", `상태 ${action.stateBefore}에서 ${action.read}를 읽었을 때 적용할 규칙을 골랐습니다.`);
+  setText("#tm-step-3-text", `${action.write}를 쓰고 ${action.move === "L" ? "왼쪽" : action.move === "R" ? "오른쪽" : "그 자리에"}으로 이동했습니다.`);
+  setText("#tm-step-4-text", `이제 상태 ${action.next}로 넘어가 다음 계산을 준비합니다.`);
+  setStepCardActive("tm-step", 4, 4);
 }
 
 function stopAnimation(name) {
@@ -789,6 +862,7 @@ function loadTmPreset(presetKey, tapeInput) {
   tmState.steps = 0;
   tmState.halted = false;
   tmState.log = `${preset.name}: ${preset.description}`;
+  tmState.lastAction = null;
 }
 
 function tmRead(index) {
@@ -802,14 +876,18 @@ function tmWrite(index, value) {
 function tmStep() {
   if (tmState.halted) {
     tmState.log = "머신이 이미 정지했습니다.";
+    tmState.lastAction = null;
     return;
   }
   const preset = currentTmPreset();
+  const stateBefore = tmState.state;
+  const headBefore = tmState.head;
   const symbol = tmRead(tmState.head);
   const action = preset.transitions[tmState.state]?.[symbol];
   if (!action) {
     tmState.halted = true;
     tmState.log = `전이 없음: 상태 ${tmState.state}, 기호 ${symbol}`;
+    tmState.lastAction = null;
     return;
   }
   tmWrite(tmState.head, action.write);
@@ -822,6 +900,7 @@ function tmStep() {
   tmState.state = action.next;
   tmState.steps += 1;
   tmState.halted = action.next === preset.accept;
+  tmState.lastAction = { stateBefore, headBefore, read: symbol, write: action.write, move: action.move, next: action.next, headAfter: tmState.head };
   tmState.log = `읽기 ${symbol} -> 쓰기 ${action.write}, 이동 ${action.move}, 다음 상태 ${action.next}`;
 }
 
@@ -1053,6 +1132,7 @@ function renderTm() {
   });
   renderTraceTable("#tm-table", ["상태", "읽기", "쓰기", "이동", "다음"], rows);
   updateTmHardware();
+  renderTmSteps();
 }
 
 function renderVn() {
@@ -1199,6 +1279,7 @@ function animateEnigma(trace, fallbackWindows, settings) {
     setText("#enigma-window-right", fallbackWindows[2] || "A");
     renderPairStream("#enigma-letter-film", []);
     updateEnigmaHardware(null, settings, fallbackWindows);
+    renderEnigmaSteps(null, settings);
     setText("#enigma-visual-caption", "영문자를 입력하면 한 글자가 로터를 통과하는 경로가 보입니다.");
     return;
   }
@@ -1211,6 +1292,7 @@ function animateEnigma(trace, fallbackWindows, settings) {
     renderPairStream("#enigma-letter-film", pairs, index);
     renderEnigmaPath(frame);
     updateEnigmaHardware(frame, settings, fallbackWindows);
+    renderEnigmaSteps(frame, settings);
     setText("#enigma-visual-caption", `${frame.before}에서 입력 ${frame.path.input}가 플러그보드에서 ${frame.path.plug}(으)로 바뀌고, 로터를 지나 ${frame.path.right} -> ${frame.path.middle} -> ${frame.path.left}, 반사판에서 ${frame.path.reflector}, 돌아오며 ${frame.path.back}, 마지막에 ${frame.path.output} 램프가 켜집니다. 다음 창은 ${frame.after}입니다.`);
   }, 860);
 }
@@ -1221,6 +1303,7 @@ function animateBombe(result, order) {
     renderCellStrip("#bombe-cipher-track", []);
     renderCellStrip("#bombe-crib-track", []);
     updateBombeHardware(result, order, null);
+    renderBombeSteps(result, null);
     setText("#bombe-visual-caption", "암호문과 크립을 입력하면 정렬을 겹쳐 보는 과정이 보입니다.");
     return;
   }
@@ -1229,6 +1312,7 @@ function animateBombe(result, order) {
     renderCellStrip("#bombe-cipher-track", visibleCipher);
     renderBombeTrack("#bombe-crib-track", visibleCipher.length, result.cleanCrib, frame.offset);
     updateBombeHardware(result, order, frame);
+    renderBombeSteps(result, frame);
     const caption = frame.status === "impossible"
       ? `offset ${frame.offset}: ${frame.segment}와 ${result.cleanCrib}를 겹치면 자기 자신으로 가는 글자가 생겨 바로 탈락합니다.`
       : `offset ${frame.offset}: ${frame.segment}와 ${result.cleanCrib}를 겹쳐 보고 가능한 설정을 더 검사합니다.`;

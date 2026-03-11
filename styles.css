@@ -2233,3 +2233,51 @@ body.modal-open {
     padding: 20px;
   }
 }
+
+.machine-step-block {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.step-explainer {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.step-card {
+  padding: 14px 14px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.step-card span {
+  display: block;
+  color: rgba(219, 230, 244, 0.72);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.step-card strong {
+  display: block;
+  margin-top: 8px;
+  color: #f8fbff;
+  font-family: var(--mono);
+  font-size: 1.02rem;
+}
+
+.step-card p {
+  margin: 8px 0 0;
+  color: rgba(219, 230, 244, 0.84);
+  line-height: 1.5;
+}
+
+.step-card.active {
+  transform: translateY(-2px);
+  border-color: rgba(255, 208, 117, 0.4);
+  box-shadow: 0 14px 28px rgba(255, 208, 117, 0.12);
+  background: rgba(255, 208, 117, 0.08);
+}
