@@ -1,4 +1,4 @@
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+﻿const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const englishFrequencies = {
   A: 8.167, B: 1.492, C: 2.782, D: 4.253, E: 12.702, F: 2.228, G: 2.015,
   H: 6.094, I: 6.966, J: 0.153, K: 0.772, L: 4.025, M: 2.406, N: 6.749,
@@ -191,6 +191,15 @@ function setText(target, text) {
   if (element) {
     element.textContent = text;
   }
+}
+
+function summarizePlugboard(text) {
+  const normalized = safeUpper(text).trim();
+  return normalized ? normalized.split(/\s+/).join(", ") : "없음";
+}
+
+function summarizeEnigmaSettings(settings) {
+  return `로터 ${settings.order.join("-")}는 서로 다른 배선판 3개를 이 순서로 꽂았다는 뜻입니다. 창 ${settings.positions.join("")}는 세 로터의 출발 각도이고, 플러그보드 ${summarizePlugboard(settings.plugboard)}는 로터에 들어가기 전에 먼저 서로 바꿔 주는 글자 쌍입니다.`;
 }
 
 function stopAnimation(name) {
@@ -1021,7 +1030,7 @@ function renderTm() {
   setText("#tm-state", tmState.state);
   setText("#tm-head", String(tmState.head));
   setText("#tm-steps", String(tmState.steps));
-  setText("#tm-log", `${preset.description} | ${tmState.log}`);
+  setText("#tm-log", `${preset.description} 지금 기계는 ${tmState.log}`);
 
   const tapeTarget = resolveTarget("#tm-tape");
   tapeTarget.innerHTML = "";
@@ -1202,7 +1211,7 @@ function animateEnigma(trace, fallbackWindows, settings) {
     renderPairStream("#enigma-letter-film", pairs, index);
     renderEnigmaPath(frame);
     updateEnigmaHardware(frame, settings, fallbackWindows);
-    setText("#enigma-visual-caption", `${frame.before}에서 ${frame.input}가 들어가 ${frame.output}로 나오고, 다음 창은 ${frame.after}가 됩니다.`);
+    setText("#enigma-visual-caption", `${frame.before}에서 입력 ${frame.path.input}가 플러그보드에서 ${frame.path.plug}(으)로 바뀌고, 로터를 지나 ${frame.path.right} -> ${frame.path.middle} -> ${frame.path.left}, 반사판에서 ${frame.path.reflector}, 돌아오며 ${frame.path.back}, 마지막에 ${frame.path.output} 램프가 켜집니다. 다음 창은 ${frame.after}입니다.`);
   }, 860);
 }
 
@@ -1429,8 +1438,9 @@ function updateEnigma() {
   const settings = getEnigmaSettings();
   const input = document.querySelector("#enigma-input").value;
   const result = runEnigma(input, settings);
+  setText("#enigma-setting-meaning", summarizeEnigmaSettings(settings));
   setText("#enigma-output", result.error || result.output || "입력된 영문자가 없습니다.");
-  setText("#enigma-message", result.error ? result.error : "같은 설정으로 결과 문자열을 다시 넣으면 원문으로 되돌릴 수 있습니다.");
+  setText("#enigma-message", result.error ? result.error : "복호화는 같은 설정에서 암호문을 다시 넣는 것입니다. 아래 추적표와 팝업 경로를 보면 글자가 어느 단계에서 바뀌는지 확인할 수 있습니다.");
   if (result.error) {
     animateEnigma([], settings.positions, settings);
     renderTraceTable("#enigma-trace", ["#", "입력/출력", "창 위치", "출력"], []);
@@ -1440,6 +1450,7 @@ function updateEnigma() {
   renderTraceTable("#enigma-trace", ["#", "입력/출력", "창 위치(전/후)", "결과"], rows);
   animateEnigma(result.trace, result.finalWindow || settings.positions, settings);
 }
+
 
 function updateBombe() {
   const order = [
@@ -1464,14 +1475,14 @@ function updateBombe() {
   setText(
     "#bombe-summary",
     result.cleanCrib
-      ? `${result.alignments.length}개 정렬을 검사했고, ${possible.length}개 정렬에서 후보가 나왔습니다.`
+      ? `${result.alignments.length}개의 줄맞춤(offset)을 검사했습니다. offset은 추정한 단어를 암호문 밑에 몇 칸 옮겨 놓았는지를 뜻하며, 그중 ${possible.length}개는 아직 모순이 발견되지 않았습니다.`
       : "암호문과 크립을 모두 영문으로 입력해 주세요."
   );
   setText(
     "#bombe-note",
     result.truncated
       ? "검색량이 커서 앞부분 정렬만 먼저 검사했습니다. 더 짧은 암호문이나 크립으로 다시 시도해 보세요."
-      : `${impossible.length}개 정렬은 같은 글자 금지 규칙만으로 즉시 탈락했습니다.`
+      : `${impossible.length}개 정렬은 "같은 글자는 자기 자신으로 암호화될 수 없다"는 규칙만으로 즉시 탈락했습니다. candidate는 정답이 아니라 아직 탈락하지 않았다는 뜻입니다.`
   );
 
   alignTarget.innerHTML = "";
